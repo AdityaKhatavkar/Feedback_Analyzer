@@ -1,0 +1,16 @@
+{
+  "name": "feedback_analyzer",
+  "version": "1.0.0",
+  "description": "This project analyses the feedback provided to it and give helpful insights from it  in a non technical readable format",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "mongoose": "^8.6.3"
+  }
+}

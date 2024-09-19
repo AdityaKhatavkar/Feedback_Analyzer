@@ -1,0 +1,40 @@
+# Node modules
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Dependency directories
+/client/node_modules/
+/server/node_modules/
+
+# Environment variables
+.env
+
+# Build files
+/client/build/
+/client/dist/
+
+# Coverage directory used by testing tools like jest
+coverage/
+*.lcov
+
+# OS or Editor specific files
+.DS_Store
+.vscode/
+.idea/
+
+# MongoDB files (if using a local db)
+*.lock
+dump/
+data/
+
+# Machine Learning model files
+/server/ml/*.pkl
+/server/ml/*.h5
+
+# Temporary files
+tmp/
+temp/
