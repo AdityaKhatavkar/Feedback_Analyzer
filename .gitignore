@@ -1,40 +1,25 @@
-# Node modules
-node_modules/
-
 # Logs
-logs/
+logs
 *.log
 npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# Dependency directories
-/client/node_modules/
-/server/node_modules/
+node_modules
+dist
+dist-ssr
+*.local
 
-# Environment variables
-.env
-
-# Build files
-/client/build/
-/client/dist/
-
-# Coverage directory used by testing tools like jest
-coverage/
-*.lcov
-
-# OS or Editor specific files
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
 .DS_Store
-.vscode/
-.idea/
-
-# MongoDB files (if using a local db)
-*.lock
-dump/
-data/
-
-# Machine Learning model files
-/server/ml/*.pkl
-/server/ml/*.h5
-
-# Temporary files
-tmp/
-temp/
+*.suo
+*.env
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
