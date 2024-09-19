@@ -1,15 +1,16 @@
 {
-  "name": "feedback_analyzer",
+  "name": "server",
   "version": "1.0.0",
-  "description": "This project analyses the feedback provided to it and give helpful insights from it  in a non technical readable format",
   "main": "index.js",
   "type": "module",
-  "scripts": {
-    "start": "nodemon -r dotenv/config --experimental-json-modules server/index.js"
-  },
+ "scripts": {
+  "start": "nodemon -r dotenv/config --experimental-json-modules server/index.js"
+},
+
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "description": "",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
@@ -21,6 +22,6 @@
     "python-shell": "^5.0.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.6"
+    "nodemon": "^3.1.5"
   }
 }
