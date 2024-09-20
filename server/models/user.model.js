@@ -24,6 +24,9 @@ const userSchema = new mongoose.Schema({
     emailverfied:{
         type:Boolean,
         default:false,
+    },
+    RefreshToken: {
+        type: String
     }
 
 },
