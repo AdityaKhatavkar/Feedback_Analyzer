@@ -1,7 +1,7 @@
-import Asynchandler from "../utils/Asynchandler";
+import Asynchandler from "../utils/Asynchandler.js"
 import User from "../models/user.model.js";
-import Asynchandler from "../utils/Asynchandler.js";
 import jwt from "jsonwebtoken";
+import ApiError from "../utils/ApiError.js";
 
 const authverfication=Asynchandler(async (req,res,next)=>{
     try{
@@ -11,14 +11,16 @@ const authverfication=Asynchandler(async (req,res,next)=>{
       if(!token){
         throw new ApiError(401,"You are not authorized to access this route")
       }
-
+     
       const decode=await jwt.verify(token,process.env.JWT_SECRET);
-
+     
       if(!decode){
         throw new ApiError(401,"token is not verifed");
       }
+    
+    const user = await User.findById(decode._id).select("-password -RefreshToken")
 
-      const user = await User.findById(decoded._id).select("-password -RefreshToken")
+      console.log("S");
       if(!user){
         throw new ApiError(401,"user not found")
       }
@@ -27,6 +29,8 @@ const authverfication=Asynchandler(async (req,res,next)=>{
       next();
     }
     catch{
-        throw new ApiError(401,"auth verfication failed");
+        throw new ApiError(401,"user is not logged in");
     }
 })
+
+export default authverfication; 

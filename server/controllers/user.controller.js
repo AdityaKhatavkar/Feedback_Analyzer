@@ -104,7 +104,7 @@ const loginUser = Asynchandler(async (req, res) => {
     }
 
     const finaluser=await User.findById(user._id).select("-password -RefreshToken -verficationcode");
-    
+
 
     if (user.emailverfied === false) {
 
@@ -134,4 +134,37 @@ const loginUser = Asynchandler(async (req, res) => {
 
 });
 
-export { registerUser, verifyemailcode,loginUser };
+const logoutUser = Asynchandler(async (req, res) => {
+    
+    const user = await User.findById(req.user._id)
+
+    if (!user) {
+      throw new ApiError(400, "user is not found")
+    }
+  
+    await User.updateOne({ _id: user._id }, { RefreshToken: undefined });
+  
+    const logoutuser = await User.findById(user._id).select("-password -RefreshToken")
+  
+    if (!logoutuser) {
+      throw new ApiError(400, "logout user in not found")
+    }
+    
+    const options = {
+      httpOnly: true,
+      secure: true
+    }
+  
+  
+    return res
+      .status(200)
+      .clearCookie("RefreshToken", options)
+      .json(
+        new ApiRespoance(
+          200,
+          logoutuser,
+          "user logout"
+        )
+      )
+})
+export { registerUser, verifyemailcode,loginUser,logoutUser };

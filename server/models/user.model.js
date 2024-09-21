@@ -50,7 +50,7 @@ userSchema.pre("save",async function(){
 userSchema.methods.getJwtToken= function(){
     return jwt.sign(
         {
-            id:this._id
+            _id:this._id
         },
         process.env.JWT_SECRET,
         {
