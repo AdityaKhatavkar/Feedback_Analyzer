@@ -20,7 +20,6 @@ const authverfication=Asynchandler(async (req,res,next)=>{
     
     const user = await User.findById(decode._id).select("-password -RefreshToken")
 
-      console.log("S");
       if(!user){
         throw new ApiError(401,"user not found")
       }

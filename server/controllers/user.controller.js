@@ -149,7 +149,7 @@ const logoutUser = Asynchandler(async (req, res) => {
     if (!logoutuser) {
       throw new ApiError(400, "logout user in not found")
     }
-    
+
     const options = {
       httpOnly: true,
       secure: true
@@ -167,4 +167,5 @@ const logoutUser = Asynchandler(async (req, res) => {
         )
       )
 })
+
 export { registerUser, verifyemailcode,loginUser,logoutUser };
