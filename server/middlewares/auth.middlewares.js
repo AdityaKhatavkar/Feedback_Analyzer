@@ -12,7 +12,7 @@ const authverfication=Asynchandler(async (req,res,next)=>{
         throw new ApiError(401,"You are not authorized to access this route")
       }
 
-      const decode=jwt.verify(token,process.env.JWT_SECRET);
+      const decode=await jwt.verify(token,process.env.JWT_SECRET);
 
       if(!decode){
         throw new ApiError(401,"token is not verifed");
