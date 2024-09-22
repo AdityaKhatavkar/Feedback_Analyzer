@@ -29,6 +29,10 @@ const userSchema = new mongoose.Schema({
         type:String,
         default:""
     },
+    tokenid:{
+        type:String,
+        default:""
+    },
     RefreshToken: {
         type: String
     }

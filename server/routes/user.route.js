@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { registerUser,verifyemailcode ,loginUser,logoutUser} from "../controllers/user.controller.js";
+import { registerUser, verifyemailcode, loginUser, logoutUser } from "../controllers/user.controller.js";
 import authverfication from "../middlewares/auth.middlewares.js";
-import { feedbackcollection } from "../controllers/feedback.controller.js";
-const router=Router();
+import { feedbackcollection, feedbackformcreation, feedbackformdelete, formcollection,apigenerate,apifeedback } from "../controllers/feedback.controller.js";
+const router = Router();
 
 router.route('/register').post(registerUser);
 
@@ -10,8 +10,18 @@ router.route('/veficationcode').post(verifyemailcode);
 
 router.route('/login').post(loginUser);
 
-router.route('/logout').post(authverfication,logoutUser);
+router.route('/logout').post(authverfication, logoutUser);
 
-router.route('/feedback').post(authverfication,feedbackcollection);
+router.route('/directfeedback').post(authverfication, feedbackcollection);
+
+router.route('/feedbackformcreation').post(authverfication, feedbackformcreation);
+
+router.route('/feedbackformdelete').post(authverfication, feedbackformdelete);
+
+router.route('/:id/:verficationcode').post(formcollection);
+
+router.route('/apigenerate').post(authverfication,apigenerate);
+
+router.route('/:id/:tokenid').post(apifeedback);
 
 export default router;

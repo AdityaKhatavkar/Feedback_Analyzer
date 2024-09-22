@@ -24,7 +24,13 @@ const feedbackSchema = new mongoose.Schema({
         ennum:["good","bad","suggestion","other"],
         default:"other",
         
+    },
+    createdAt:{
+        type:Date,
+        default:Date.now,
+        expires:3600*6
     }
+   
 },
 {timestamps:true}
 )
