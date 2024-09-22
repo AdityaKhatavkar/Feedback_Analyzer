@@ -154,16 +154,17 @@ const apifeedback=Asynchandler(async(req,res)=>{
    if(!_id || !tokenid){
       throw new ApiError(400,"No api found");
    }
-
+ 
    if(!data){
       throw new ApiError(400,"Please provide data");
    }
 
    const user=await User.findById(_id).select("-password -RefreshToken -verficationcode");
-
+   
    if(!user){
       throw new ApiError(400,"user not found");
    }
+   await Feedback.deleteMany({ clientid: user._id });
    if(user.tokenid!==tokenid){
       throw new ApiError(400,"invalid token");
    }
