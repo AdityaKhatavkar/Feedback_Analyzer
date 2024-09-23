@@ -2,6 +2,7 @@ import { Router } from "express";
 import { registerUser, verifyemailcode, loginUser, logoutUser } from "../controllers/user.controller.js";
 import authverfication from "../middlewares/auth.middlewares.js";
 import { feedbackcollection, feedbackformcreation, feedbackformdelete, formcollection,apigenerate,apifeedback } from "../controllers/feedback.controller.js";
+import { goodfeedback, badfeedback , neutralfeedback, otherfeedback } from "../controllers/data.controller.js";
 const router = Router();
 
 router.route('/register').post(registerUser);
@@ -23,5 +24,15 @@ router.route('/:id/:verficationcode').post(formcollection);
 router.route('/apigenerate').post(authverfication,apigenerate);
 
 router.route('/:id/:tokenid').post(apifeedback);
+
+router.route('/goodfeedback').get(authverfication, goodfeedback);
+
+router.route('/badfeedback').get(authverfication, badfeedback);
+
+router.route('/neutralfeedback').get(authverfication, neutralfeedback);
+
+router.route('/otherfeedback').get(authverfication, otherfeedback);
+
+
 
 export default router;
