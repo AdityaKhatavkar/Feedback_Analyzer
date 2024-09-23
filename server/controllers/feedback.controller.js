@@ -10,11 +10,12 @@ const feedbackcollection = Asynchandler(async (req, res) => {
    if (!data) {
       throw new ApiError(400, "please provide data")
    }
-   const checkdata = await Feedback.find({ clientid: req.user._id });
+   const user = await Feedback.find({ clientid: req.user._id });
 
-   if (checkdata.length > 0) {
+   if (user) {
       await Feedback.deleteMany({ clientid: req.user._id });
    }
+
    data.map(async (element) => {
       const feedback = await Feedback.create({
          clientid: req.user._id,

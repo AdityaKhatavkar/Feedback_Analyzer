@@ -96,7 +96,9 @@ const loginUser = Asynchandler(async (req, res) => {
     }
 
     const user = await User.findOne({ username });
-
+    if(!user){
+        throw new ApiError(400, "user not found")
+    }
     const checkpassword = await user.ispasswordcorrect(password)
 
     if (!checkpassword) {
