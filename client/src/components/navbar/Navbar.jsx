@@ -19,7 +19,7 @@ function Navbar() {
                                 <ul className="bg-base-100 rounded-t-none p-2 w-36">
                                     <li><Link to='/formcreation' >CREATE-FORM</Link></li> 
                                     <li><a>JSON-DATA</a></li>
-                                    <li><a>GENRATE-API</a></li>
+                                    <li><Link to='/apigenration' >GENRATE-API</Link></li>
                                 </ul>
                             </details>
                         </li>

@@ -6,25 +6,28 @@ import Formcreation from './components/formfeedback/Formcreation.jsx'
 import Navbar from './components/navbar/Navbar.jsx'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Form from './components/formfeedback/Form.jsx'
+import Apigentration from './components/Api/Apigentration.jsx'
+import Dashboard from './components/dashboard/Dashboard.jsx'
 
 
 function App() {
   return (
    
-    // <BrowserRouter>
-    //    <Navbar/>
-    //   <Routes>
+    <BrowserRouter>
+       <Navbar/>
+      <Routes>
 
-    //     <Route path="/formcreation" element={<Formcreation />} />
+        <Route path="/apigenration" element={<Dashboard />} />
         
        
-    //  </Routes>
-    //  </BrowserRouter>
+     </Routes>
+     </BrowserRouter>
+
     
 
-    <>
-    <Form/>
-    </>
+    // <>
+    // <Form/>
+    // </>
   )
 }
 
