@@ -5,22 +5,26 @@ import Emailverification from './components/emailverfication/Emailverification.j
 import Formcreation from './components/formfeedback/Formcreation.jsx'
 import Navbar from './components/navbar/Navbar.jsx'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Form from './components/formfeedback/Form.jsx'
 
 
 function App() {
   return (
    
-    <BrowserRouter>
-       <Navbar/>
-      <Routes>
+    // <BrowserRouter>
+    //    <Navbar/>
+    //   <Routes>
 
-        <Route path="/formcreation" element={<Formcreation />} />
+    //     <Route path="/formcreation" element={<Formcreation />} />
         
        
-     </Routes>
-     </BrowserRouter>
+    //  </Routes>
+    //  </BrowserRouter>
     
 
+    <>
+    <Form/>
+    </>
   )
 }
 

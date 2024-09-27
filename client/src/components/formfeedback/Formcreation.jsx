@@ -22,8 +22,8 @@ function Formcreation() {
                                 <p className="py-6">
                                     click on the button below to create your own form
                                 </p>
-                                <button className="btn btn-primary">Create form link</button>
-
+                                <button className="btn btn-primary m-2">Create form link</button>
+                                <button className="btn btn-error m-2">delete form link</button>
                                
                             </div>
                             <input type="text" placeholder="Type here" className="input input-bordered w-full " />
