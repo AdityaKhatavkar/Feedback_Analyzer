@@ -58,7 +58,7 @@ function Dashboard() {
                                 <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                             </form>
                             <h3 className="font-bold text-lg text-green-600">Good-Feedback</h3>
-                            <p className="py-4"><Allfeedback/></p>
+                            <div className="py-4"><Allfeedback/></div>
                         </div>
                     </dialog>
 
@@ -87,7 +87,7 @@ function Dashboard() {
                                 <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                             </form>
                             <h3 className="font-bold text-lg text-red-600">Bad-Feedback</h3>
-                            <p className="py-4"><Allfeedback/></p>
+                            <div className="py-4"><Allfeedback/></div>
                         </div>
                     </dialog>
 
@@ -116,7 +116,7 @@ function Dashboard() {
                                 <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                             </form>
                             <h3 className="font-bold text-lg text-blue-600">Neutral-Feedback</h3>
-                            <p className="py-4"><Allfeedback/></p>
+                            <div className="py-4"><Allfeedback/></div>
                         </div>
                     </dialog>
 

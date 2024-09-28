@@ -8,6 +8,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Form from './components/formfeedback/Form.jsx'
 import Apigentration from './components/Api/Apigentration.jsx'
 import Dashboard from './components/dashboard/Dashboard.jsx'
+import Jsonfile from './components/Fileinput/Jsonfile.jsx'
 
 
 function App() {
@@ -17,7 +18,10 @@ function App() {
        <Navbar/>
       <Routes>
 
-        <Route path="/apigenration" element={<Dashboard />} />
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/apigenration" element={<Apigentration />} />
+        <Route path="/formcreation" element={<Formcreation />} />
+        <Route path="/jsondata" element={<Jsonfile />} />
         
        
      </Routes>
@@ -25,9 +29,7 @@ function App() {
 
     
 
-    // <>
-    // <Form/>
-    // </>
+    
   )
 }
 

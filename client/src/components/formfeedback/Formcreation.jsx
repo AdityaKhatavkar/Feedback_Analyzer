@@ -3,35 +3,36 @@ import React from 'react'
 function Formcreation() {
     return (
         <div className='h-screen'>
-            <div className='grid grid-cols-6 md:h-screen h-1/2   '>
-                <div className='md:col-span-2 col-span-6 flex flex-col justify-center items-center m-5  '>
-                    <p className='md:text-3xl text-2xl font-bold mt-20 md:mt-0'>
-                        "Create your own form and share it with your friends"
-                    </p>
-                    <div className='flex flex-col md:text-xl  mt-4'>
-                        <span className=' text-red-600'>Note:</span>
-                        <h1>If you create a form the previous form will be deleted and the the previous feedback data is deleted</h1>
-
-                    </div>
+        
+        <div className='grid grid-cols-7 h-full '>
+            <div className='md:col-span-3 col-span-7 flex justify-center items-center mt-28 md:mt-0'>
+                <div className="bg-base-200 shadow-2xl p-10">
+                    <h1 className='text-3xl mb-7 font-bold'>Feedback-Form</h1>
+                    <div>"create your own feedback catagries then good,bad and neutral"</div>
+                    <div className='text-red-600 mt-3'>Note:</div>
+                    <div>if you create your new form the old form will be deleted</div>
                 </div>
-                <div className='md:col-span-4 col-span-6'>
-                    <div className="hero md:h-screen">
-                        <div className="hero-content text-center flex flex-col m-5">
-                            <div className="max-w-md">
-                                <h1 className="text-5xl font-bold">Feedback-Form</h1>
-                                <p className="py-6">
-                                    click on the button below to create your own form
-                                </p>
-                                <button className="btn btn-primary m-2">Create form link</button>
-                                <button className="btn btn-error m-2">delete form link</button>
-                               
-                            </div>
-                            <input type="text" placeholder="Type here" className="input input-bordered w-full " />
+            </div>
+
+            <div className='md:col-span-4 col-span-7 flex justify-center items-center'>
+
+
+                <div className="hero min-h-screen">
+                    <div className="hero-content text-center">
+                        <div className="max-w-md">
+                            <h1 className="text-5xl font-bold">Genrate the feedback form</h1>
+                            <p className="py-6">
+                                Create your own Feedback-form and analysise the feedback
+                            </p>
+                            <button className="btn btn-primary m-2">Create Form</button>
+                            <button className="btn btn-error m-2">Delete Form</button>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
+    </div>
     )
 }
 

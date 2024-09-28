@@ -7,7 +7,7 @@ function Navbar() {
 
             <div className="navbar bg-base-100">
                 <div className="flex-1">
-                    <a className="btn btn-ghost text-xl">Feedback</a>
+                    <Link to='/' className="btn btn-ghost text-xl">Feedback</Link>
                 </div>
                 <div className="flex-none">
 
@@ -18,7 +18,7 @@ function Navbar() {
                                 <summary>Methods</summary>
                                 <ul className="bg-base-100 rounded-t-none p-2 w-36">
                                     <li><Link to='/formcreation' >CREATE-FORM</Link></li> 
-                                    <li><a>JSON-DATA</a></li>
+                                    <li><Link to='/jsondata' >JSON-DATA</Link></li>
                                     <li><Link to='/apigenration' >GENRATE-API</Link></li>
                                 </ul>
                             </details>
