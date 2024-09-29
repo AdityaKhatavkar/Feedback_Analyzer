@@ -1,6 +1,9 @@
 import React from 'react'
-
+import toast from 'react-hot-toast';
 function Jsonfile() {
+  const handle = () => {
+    toast.success('Here is your toast.');
+  }
   return (
     <div>
       <div className='h-screen flex justify-center items-center '>
@@ -18,7 +21,7 @@ function Jsonfile() {
               <input type="text" placeholder="name of the email" className="input input-bordered w-full max-w-xs m-2" />
               <input type="text" placeholder="name of the feedback" className="input input-bordered w-full max-w-xs m-2" />
 
-              <button className="btn btn-primary m-3">Get Started</button>
+              <button onClick={handle} className="btn btn-primary m-3">Get Started</button>
             </div>
           </div>
         </div>

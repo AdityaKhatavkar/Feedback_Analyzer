@@ -1,6 +1,19 @@
 import React from 'react'
-
+import { useState } from 'react'
+import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 function Login() {
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const handlelogin = async (e) => {
+        e.preventDefault();
+        if (email === '' || password === '') {
+            toast.error("Please fill all the fields")
+            return;
+        }
+        console.log(email, password);
+       
+    }
     return (
         <div className='h-screen flex flex-col items-center justify-center gap-4'>
             <div className="hero bg-base-200 min-h-screen">
@@ -11,7 +24,7 @@ function Login() {
                             Log in to access detailed feedback analysis and track insights to enhance your service quality.
                         </p>
                         <label className="label">
-                            <a href="#" className="label-text-alt link link-hover text-blue-600 text-sm">Dont have account?</a>
+                            <Link to="/signup" className="label-text-alt link link-hover text-blue-600 text-sm">Dont have account?</Link>
                         </label>
 
                     </div>
@@ -19,19 +32,19 @@ function Login() {
                         <form className="card-body">
                             <div className="form-control">
                                 <label className="label">
-                                    <span className="label-text">Email</span>
+                                    <span className="label-text">Username</span>
                                 </label>
-                                <input type="email" placeholder="email" className="input input-bordered" required />
+                                <input type="username" placeholder="Username" className="input input-bordered" onChange={(e) => setEmail(e.target.value)} required />
                             </div>
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Password</span>
                                 </label>
-                                <input type="password" placeholder="password" className="input input-bordered" required />
+                                <input type="password" placeholder="password" className="input input-bordered" onChange={(e) => setPassword(e.target.value)} required />
                                
                             </div>
                             <div className="form-control mt-6">
-                                <button className="btn btn-primary">Login</button>
+                                <button onClick={handlelogin} className="btn btn-primary">Login</button>
                             </div>
                         </form>
                     </div>
