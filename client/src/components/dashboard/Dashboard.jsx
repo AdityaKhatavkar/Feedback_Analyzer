@@ -1,9 +1,86 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Allfeedback from './Allfeedback'
-
+import toast from 'react-hot-toast';
+import axios, { all } from 'axios';
 
 function Dashboard() {
-    
+
+    const [badsummary, setBadsummary] = useState(null);
+    const [goodsummary, setGoodsummary] = useState(null);
+    const [neutralsummary, setNeutralsummary] = useState(null);
+    const [allfeedback, setAllfeedback] = useState([]);
+    const [goodfeedback, setGoodfeedback] = useState([]);
+    const [badfeedback, setBadfeedback] = useState([]);
+    const [neutralfeedback, setNeutralfeedback] = useState([]);
+
+
+
+    useEffect(() => {
+        feedbacksummary();
+        collectallfeedback();
+    }, []);
+
+    const feedbacksummary = async () => {
+
+        try {
+            const response = await axios.post('/user/allsummary', {}, {
+                withCredentials: true
+            }
+            );
+            const content = response.data;
+
+            setGoodsummary(content.data.goodsummary);
+            setBadsummary(content.data.badsummary);
+            setNeutralsummary(content.data.neutralsummary);
+
+
+
+        } catch (err) {
+            const ans = err.response.data.message;
+            toast.error(ans);
+
+        }
+    }
+
+    const collectallfeedback = async () => {
+        try {
+            const response = await axios.post('/user/allfeedback', {}, {
+                withCredentials: true
+            })
+            const content = response.data.data;
+            console.log(content);
+            
+            setAllfeedback(content);
+            content.map((feedback) => {
+                console.log(feedback);
+                if (feedback.catagry === "good") {
+
+                    setGoodfeedback([...goodfeedback, feedback]);
+
+                } 
+                else if (feedback.catagry === "bad") {
+
+                    setBadfeedback([...badfeedback, feedback]);
+
+                }
+                 else {
+
+                    setNeutralfeedback([...neutralfeedback, feedback]);
+
+                }
+                
+            })
+            console.log(allfeedback);
+            console.log(goodfeedback);
+            console.log(badfeedback);
+            console.log(neutralfeedback);
+
+        } catch (err) {
+            const ans = err.response.data.message;
+            toast.error(ans);
+
+        }
+    }
 
 
     return (
@@ -32,7 +109,6 @@ function Dashboard() {
 
                     </div>
 
-
                 </div>
 
             </div>
@@ -47,7 +123,7 @@ function Dashboard() {
                         <div className=" bg-base-100 w-full shadow-2xl">
                             <div className="card-body">
                                 <h2 className="card-title flex justify-center items-center font-bold text-green-600">Good-Feedback</h2>
-                                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fuga ex eius illo. Veritatis, nisi unde pariatur quaerat vero consequatur inventore dolor quasi cumque voluptate tempora placeat excepturi hic reiciendis voluptates neque! Asperiores recusandae iusto, eius maiores eaque unde fuga provident modi excepturi quod. Quo molestiae iure tenetur nobis, modi cumque quam nisi pariatur aliquam ducimus dicta corrupti delectus. Dolorem, illo assumenda. Eum, adipisci officiis dolor doloribus dolorum inventore? Officiis illum tenetur quasi sed velit necessitatibus numquam! Magnam, porro. Minima, suscipit.</p>
+                                <p>{goodsummary}</p>
 
                             </div>
                         </div>
@@ -61,7 +137,7 @@ function Dashboard() {
                                 <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                             </form>
                             <h3 className="font-bold text-lg text-green-600">Good-Feedback</h3>
-                            <div className="py-4"><Allfeedback/></div>
+                            <div className="py-4"><Allfeedback /></div>
                         </div>
                     </dialog>
 
@@ -76,7 +152,7 @@ function Dashboard() {
                         <div className=" bg-base-100 w-full shadow-2xl">
                             <div className="card-body">
                                 <h2 className="card-title flex justify-center items-center font-bold text-red-600">Bad-Feedback</h2>
-                                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fuga ex eius illo. Veritatis, nisi unde pariatur quaerat vero consequatur inventore dolor quasi cumque voluptate tempora placeat excepturi hic reiciendis voluptates neque! Asperiores recusandae iusto, eius maiores eaque unde fuga provident modi excepturi quod. Quo molestiae iure tenetur nobis, modi cumque quam nisi pariatur aliquam ducimus dicta corrupti delectus. Dolorem, illo assumenda. Eum, adipisci officiis dolor doloribus dolorum inventore? Officiis illum tenetur quasi sed velit necessitatibus numquam! Magnam, porro. Minima, suscipit.</p>
+                                <p>{badsummary}</p>
 
                             </div>
                         </div>
@@ -90,7 +166,7 @@ function Dashboard() {
                                 <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                             </form>
                             <h3 className="font-bold text-lg text-red-600">Bad-Feedback</h3>
-                            <div className="py-4"><Allfeedback/></div>
+                            <div className="py-4"><Allfeedback /></div>
                         </div>
                     </dialog>
 
@@ -105,7 +181,7 @@ function Dashboard() {
                         <div className=" bg-base-100 w-full shadow-2xl">
                             <div className="card-body">
                                 <h2 className="card-title flex justify-center items-center font-bold text-blue-600">Neutral-Feedback</h2>
-                                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fuga ex eius illo. Veritatis, nisi unde pariatur quaerat vero consequatur inventore dolor quasi cumque voluptate tempora placeat excepturi hic reiciendis voluptates neque! Asperiores recusandae iusto, eius maiores eaque unde fuga provident modi excepturi quod. Quo molestiae iure tenetur nobis, modi cumque quam nisi pariatur aliquam ducimus dicta corrupti delectus. Dolorem, illo assumenda. Eum, adipisci officiis dolor doloribus dolorum inventore? Officiis illum tenetur quasi sed velit necessitatibus numquam! Magnam, porro. Minima, suscipit.</p>
+                                <p>{neutralsummary}</p>
 
                             </div>
                         </div>
@@ -119,7 +195,7 @@ function Dashboard() {
                                 <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                             </form>
                             <h3 className="font-bold text-lg text-blue-600">Neutral-Feedback</h3>
-                            <div className="py-4"><Allfeedback/></div>
+                            <div className="py-4"><Allfeedback /></div>
                         </div>
                     </dialog>
 

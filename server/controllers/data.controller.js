@@ -2,6 +2,7 @@ import Feedback from "../models/feedback.model.js";
 import ApiError from "../utils/ApiError.js";
 import ApiRespoance from "../utils/ApiResponse.js";
 import Asynchandler from "../utils/Asynchandler.js";
+import Summary from "../models/Summary.model.js";
 
 const allfeedback=Asynchandler(async(req,res)=>{
     const _id=req.user._id;
@@ -22,8 +23,8 @@ const allsummary=Asynchandler(async(req,res)=>{
 
     const _id=req.user._id;
 
-    const summary=await Summary.find({clientid:_id});
-
+    const summary=await Summary.findOne({clientid:_id});
+  
     if(!summary){
         throw new ApiError(400,"summary not found")
     }
