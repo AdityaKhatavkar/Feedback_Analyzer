@@ -25,4 +25,4 @@ const sendverficationcode = (email, verficationcode) => {
     }
 }
 
-export  {sendverficationcode}
+export default sendverficationcode

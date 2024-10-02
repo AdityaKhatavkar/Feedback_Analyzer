@@ -28,8 +28,8 @@ function Signup() {
             })
             console.log(response)
              console.log(response.data)
-            const content = response.data;
-             navigate("/emailverfication/" +content.data._id );
+            // const content = response.data;
+            //  navigate("/emailverfication/" +content.data._id );
 
         } catch (err) {
              const ans = err.response.data.message

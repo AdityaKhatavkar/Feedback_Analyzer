@@ -1,6 +1,6 @@
 import Asynchandler from "../utils/Asynchandler.js"
 import ApiError from "../utils/ApiError.js"
-import {sendverficationcode} from "../utils/mailverfication.js";
+import  sendverficationcode  from "../utils/mailverfication.js";
 import User from "../models/user.model.js";
 import ApiRespoance from "../utils/ApiResponse.js";
 import Summary from "../models/Summary.model.js";
@@ -35,8 +35,7 @@ const registerUser = Asynchandler(async (req, res) => {
     const verficationcode = code.toString();
 
     try {
-        sendverficationcode(email, verficationcode);
-        console.log(verficationcode,email);
+        // sendverficationcode(email, verficationcode);
 
         const user = await User.create(
             {
@@ -59,12 +58,14 @@ const registerUser = Asynchandler(async (req, res) => {
     }
 })
 
+
+
 const verifyemailcode = Asynchandler(async (req, res) => {
 
-    const  verficationcode  = req.body;
+    const verficationcode = req.body;
     const id = req.phrams.id;
-    console.log(verficationcode,id);
-    
+    console.log(verficationcode, id);
+
     if (!verficationcode) {
         throw new ApiError(400, "Please provide verfication code");
     }
@@ -83,7 +84,7 @@ const verifyemailcode = Asynchandler(async (req, res) => {
     user.verficationcode = "";
 
     await user.save();
-    
+
     const Summary = await Summary.create(
         {
             clientid: user._id
@@ -120,14 +121,14 @@ const loginUser = Asynchandler(async (req, res) => {
     const finaluser = await User.findById(user._id).select("-password -RefreshToken ");
 
 
-    if (user.emailverfied === false) {
+    // if (user.emailverfied === false) {
 
-        res.status(200).json(
-            new ApiRespoance(200, finaluser, "Please verify your email")
-        );
+    //     res.status(200).json(
+    //         new ApiRespoance(200, finaluser, "Please verify your email")
+    //     );
 
-        return;
-    }
+    //     return;
+    // }
 
     const RefreshToken = await user.getJwtToken();
 
