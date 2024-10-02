@@ -1,7 +1,34 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-
+import { Link, useNavigate } from 'react-router-dom'
+import toast from 'react-hot-toast';
+import axios from 'axios';
 function Navbar() {
+
+     const navigate = useNavigate();
+
+    const handlelogout = async(e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post('/user/logout',{}, {
+                withCredentials: true
+            })
+          
+            const content = response.data;
+            
+            console.log(content);
+            toast.success("Logout successfully");
+            navigate("/login");
+            
+            
+        } catch (err) {
+            const ans=err.response.data.message;
+            toast.error(ans);
+            navigate("/login");
+            
+        }
+
+    }
+    
     return (
         <div className='flex z-1 fixed w-full '>
 
@@ -41,7 +68,7 @@ function Navbar() {
                                     ID :123456
                                 </a>
                             </li>
-                            <li><button>Logout</button></li>
+                            <li><button onClick={handlelogout}>Logout</button></li>
                         </ul>
                     </div>
                 </div>

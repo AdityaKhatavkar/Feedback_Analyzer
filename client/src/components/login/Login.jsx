@@ -29,7 +29,7 @@ function Login() {
                 navigate("/emailverfication/" +content.data._id );
                 
             }
-            console.log(content.data);
+            toast.success("Login successfully")
             navigate("/");
         }
         catch (err) {
