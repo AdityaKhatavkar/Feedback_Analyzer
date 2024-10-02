@@ -79,8 +79,8 @@ function Formcreation() {
 
                             {/* Conditionally rendering the URL if both id and code are not empty */}
                             {id && code && (
-                                <div>
-                                    <a className='text-blue-600 shadow-2xl p-4' href={`http://localhost:8000/form/${id}/${code}`} target="_blank" rel="noopener noreferrer">
+                                <div className='overflow-x-auto w-72 md:w-full '>
+                                    <a className='text-blue-600 shadow-2xl  ' href={`http://localhost:8000/form/${id}/${code}`} target="_blank" rel="noopener noreferrer">
                                         http://localhost:8000/form/{id}/{code}
                                     </a>
                                 </div>

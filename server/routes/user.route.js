@@ -22,7 +22,7 @@ router.route('/feedbackformcreation').post(authverfication, feedbackformcreation
 
 router.route('/feedbackformdelete').post(authverfication, feedbackformdelete);
 
-router.route('/:id/:verficationcode').post(formcollection);
+router.route('/form/:id/:verficationcode').post(formcollection);
 
 router.route('/apigenerate').post(authverfication,apigenerate);
 
