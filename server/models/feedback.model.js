@@ -29,8 +29,8 @@ const feedbackSchema = new mongoose.Schema({
     createdAt:{
         type:Date,
         default:Date.now,
-        expires:3600*6
-    }
+        expires:60*60*12
+      }
    
 },
 {timestamps:true}

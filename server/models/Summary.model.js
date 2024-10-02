@@ -17,11 +17,6 @@ const SummarySchema = new mongoose.Schema({
     netrual: {
         type: String,
         default: ''
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-        expires: 3600 * 6
     }
 
 },

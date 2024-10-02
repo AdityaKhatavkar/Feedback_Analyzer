@@ -74,18 +74,20 @@ const feedbackformdelete = Asynchandler(async (req, res) => {
 
 //submitting the form
 const formcollection = Asynchandler(async (req, res) => {
+  
    const _id = req.params.id;
-   const verficationcode = req.params.code;
+   const verficationcode = req.params.verficationcode;
    const { feedback, email } = req.body;
-
+  
    if (!verficationcode || !_id) {
       throw new ApiError(400, "No form found")
    }
 
-   const user=await User.findById(_id).select("-password -RefreshToken -verficationcode");
+   const user=await User.findById(_id).select("-password -RefreshToken ");
     if(!user){
        throw new ApiError(400, "user not found")
     }
+    
    if (user.verficationcode !== verficationcode) {
       throw new ApiError(400, "Invalid form")
    }
@@ -98,12 +100,13 @@ const formcollection = Asynchandler(async (req, res) => {
       email: email,
       feedback: feedback
    })
-
+   
    if (!newfeedback) {
       throw new ApiError(400, "form not created")
    }
+
    res.status(200).json(
-      new ApiRespoance(200, finalfeeback, "form submitted")
+      new ApiRespoance(200, newfeedback, "form submitted")
    )
 })
 

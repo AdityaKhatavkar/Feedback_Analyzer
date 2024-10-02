@@ -3,6 +3,7 @@ import ApiError from "../utils/ApiError.js"
 import sendverficationcode from "../utils/mailverfication.js";
 import User from "../models/user.model.js";
 import ApiRespoance from "../utils/ApiResponse.js";
+import Summary from "../models/Summary.model.js";
 
 
 const registerUser = Asynchandler(async (req, res) => {
@@ -35,7 +36,7 @@ const registerUser = Asynchandler(async (req, res) => {
 
     try {
         sendverficationcode(email, verficationcode);
-        
+
         const user = await User.create(
             {
                 name,
@@ -45,7 +46,7 @@ const registerUser = Asynchandler(async (req, res) => {
                 verficationcode
             });
 
-        const finaluser=await User.findById(user._id).select("-password -RefreshToken -verficationcode");
+        const finaluser = await User.findById(user._id).select("-password -RefreshToken -verficationcode");
         res
             .status(201)
             .json(
@@ -78,7 +79,14 @@ const verifyemailcode = Asynchandler(async (req, res) => {
     user.verficationcode = "";
 
     await user.save();
-    const finaluser=await User.findById(user._id).select("-password -RefreshToken -verficationcode");
+    
+    const Summary = await Summary.create(
+        {
+            clientid: user._id
+        }
+    );
+
+    const finaluser = await User.findById(user._id).select("-password -RefreshToken -verficationcode");
     res
         .status(200)
         .json(
@@ -96,7 +104,7 @@ const loginUser = Asynchandler(async (req, res) => {
     }
 
     const user = await User.findOne({ username });
-    if(!user){
+    if (!user) {
         throw new ApiError(400, "user not found")
     }
     const checkpassword = await user.ispasswordcorrect(password)
@@ -105,7 +113,7 @@ const loginUser = Asynchandler(async (req, res) => {
         throw new ApiError(400, "Invalid password")
     }
 
-    const finaluser=await User.findById(user._id).select("-password -RefreshToken -verficationcode");
+    const finaluser = await User.findById(user._id).select("-password -RefreshToken ");
 
 
     if (user.emailverfied === false) {
@@ -126,48 +134,48 @@ const loginUser = Asynchandler(async (req, res) => {
     res
         .status(200)
         .cookie("RefreshToken", RefreshToken,
-         {
-            httpOnly: true,
-            secure: true,
-            maxAge: 1000 * 60 * 60 * 24
-        }
-    )
+            {
+                httpOnly: true,
+                secure: true,
+                maxAge: 1000 * 60 * 60 * 24
+            }
+        )
         .json(new ApiRespoance(200, finaluser, "user logged in"))
 
 });
 
 const logoutUser = Asynchandler(async (req, res) => {
-    
+
     const user = await User.findById(req.user._id)
 
     if (!user) {
-      throw new ApiError(400, "user is not found")
+        throw new ApiError(400, "user is not found")
     }
-  
+
     await User.updateOne({ _id: user._id }, { RefreshToken: undefined });
-  
+
     const logoutuser = await User.findById(user._id).select("-password -RefreshToken")
-  
+
     if (!logoutuser) {
-      throw new ApiError(400, "logout user in not found")
+        throw new ApiError(400, "logout user in not found")
     }
 
     const options = {
-      httpOnly: true,
-      secure: true
+        httpOnly: true,
+        secure: true
     }
-  
-  
+
+
     return res
-      .status(200)
-      .clearCookie("RefreshToken", options)
-      .json(
-        new ApiRespoance(
-          200,
-          logoutuser,
-          "user logout"
+        .status(200)
+        .clearCookie("RefreshToken", options)
+        .json(
+            new ApiRespoance(
+                200,
+                logoutuser,
+                "user logout"
+            )
         )
-      )
 })
 
-export { registerUser, verifyemailcode,loginUser,logoutUser };
+export { registerUser, verifyemailcode, loginUser, logoutUser };
