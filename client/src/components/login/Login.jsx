@@ -2,16 +2,29 @@ import React from 'react'
 import { useState } from 'react'
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 function Login() {
-    const [email, setEmail] = useState('')
+    const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const handlelogin = async (e) => {
         e.preventDefault();
-        if (email === '' || password === '') {
+        if (username === '' || password === '') {
             toast.error("Please fill all the fields")
             return;
         }
-        console.log(email, password);
+        try{
+          const response = await axios.post('/user/login',{
+              username,
+              password
+          },{
+              withCredentials: true
+          })
+          console.log(response.data)
+
+        }
+        catch(err){
+            toast.error(err.response.data)
+        }
        
     }
     return (
@@ -34,7 +47,7 @@ function Login() {
                                 <label className="label">
                                     <span className="label-text">Username</span>
                                 </label>
-                                <input type="username" placeholder="Username" className="input input-bordered" onChange={(e) => setEmail(e.target.value)} required />
+                                <input type="username" placeholder="Username" className="input input-bordered" onChange={(e) => setUsername(e.target.value)} required />
                             </div>
                             <div className="form-control">
                                 <label className="label">

@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
- "scripts": {
-  "start": "nodemon -r dotenv/config --experimental-json-modules index.js"
-},
-
+  "scripts": {
+    "start": "nodemon -r dotenv/config --experimental-json-modules index.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
