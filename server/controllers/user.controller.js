@@ -72,9 +72,15 @@ const registerUser = Asynchandler(async (req, res) => {
 
 const verifyemailcode = Asynchandler(async (req, res) => {
 
-    const verficationcode = req.body;
-    const id = req.phrams.id;
-    console.log(verficationcode, id);
+    const {verficationcode} = req.body;
+
+    const { id } = req.params;
+    
+    const check=await User.findById(id);
+
+    if(check.emailverfied){
+        throw new ApiError(400, "user already verfied")
+    }
 
     if (!verficationcode) {
         throw new ApiError(400, "Please provide verfication code");
@@ -85,22 +91,28 @@ const verifyemailcode = Asynchandler(async (req, res) => {
     if (!user) {
         throw new ApiError(400, "Invalid user");
     }
+    
+    
 
     if (user.verficationcode !== verficationcode) {
         throw new ApiError(400, "Invalid verfication code");
     }
+
     user.emailverfied = true;
+
 
     user.verficationcode = "";
 
     await user.save();
 
-    const Summary = await Summary.create(
+    const newsummary = await  Summary.create(
         {
             clientid: user._id
         }
     );
-
+    if(!newsummary){
+        throw new ApiError(400, "problem in creating summary")
+    }
     const finaluser = await User.findById(user._id).select("-password -RefreshToken -verficationcode");
     res
         .status(200)

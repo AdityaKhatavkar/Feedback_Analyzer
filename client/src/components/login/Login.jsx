@@ -29,6 +29,8 @@ function Login() {
                 navigate("/emailverfication/" +content.data._id );
                 
             }
+            console.log(content.data);
+            navigate("/");
         }
         catch (err) {
             const ans=err.response.data.message

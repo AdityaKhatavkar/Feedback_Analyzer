@@ -2,8 +2,11 @@ import React from 'react'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 function Emailverification() {
     const [code, setCode] = useState('');
+
+    const navigate=useNavigate();
     const handlesubmit = async(e) => {
         e.preventDefault();
         if (code === '') {
@@ -18,6 +21,7 @@ function Emailverification() {
                 withCredentials: true
             })
             
+            navigate("/login");
 
         }  catch (err) {
             const ans=err.response.data.message
