@@ -6,25 +6,37 @@ import User from "../models/user.model.js";
 
 //direct json data with array of object is send by the user
 const feedbackcollection = Asynchandler(async (req, res) => {
-   const { data } = req.body;
-   if (!data) {
-      throw new ApiError(400, "please provide data")
+   const  data  = req.body;
+   const id=req.user._id;
+   const dataarray=data.data;
+  
+   if(!dataarray || !data){
+      throw new ApiError(400,"No data found")
    }
-   const user = await Feedback.find({ clientid: req.user._id });
-
-   if (user) {
-      await Feedback.deleteMany({ clientid: req.user._id });
+   const user=await User.findById(id).select("-password -RefreshToken -verficationcode");
+   if(!user){
+      throw new ApiError(400,"user not found")
    }
-
-   data.map(async (element) => {
-      const feedback = await Feedback.create({
-         clientid: req.user._id,
-         email: element.email,
-         feedback: element.feedback
+   const feedback=await Feedback.find({clientid:id});
+   if(feedback.length>0){
+      await Feedback.deleteMany({ clientid: id });
+   }
+   dataarray.map(async(element)=>{  
+      await Feedback.create({
+         clientid:id,
+         email:element.email,
+         feedback:element.feedback
       })
-      //   console.log(feedback)
+   }
+   )
 
-   })
+   
+
+   
+
+   
+  
+
    res.status(200).json(
       new ApiRespoance(200, [], "feedback submitted")
    )

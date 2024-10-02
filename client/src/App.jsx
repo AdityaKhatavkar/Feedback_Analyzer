@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes, Outlet } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Outlet, Navigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import Login from './components/login/Login.jsx';
 import Signup from './components/Signup/Signup.jsx';
@@ -35,6 +35,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/emailverfication/:id" element={<Emailverification />} />
         <Route path="/form" element={<Form />} />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
 
       <Toaster />

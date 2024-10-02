@@ -1,38 +1,63 @@
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Jsonfile() {
   const [file, setFile] = useState(null);
   const [emailField, setEmailField] = useState('');
   const [feedbackName, setFeedbackName] = useState('');
 
+  const navigate=useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // if (!file || !emailField || !feedbackName) {
-    //   toast.error('Please fill all the fields');
-    //   return;
-    // }
+    if (!file || !emailField || !feedbackName) {
+      toast.error('Please fill all the fields');
+      return;
+    }
 
     const reader = new FileReader();
     reader.onload = async (e) => {
       try {
+        
         const feedbackData = JSON.parse(e.target.result);
-
-       feedbackData.map((feedback) => {
-            console.log(feedback[emailField]); 
-            console.log(feedback[feedbackName]); 
+         console.log(feedbackData);
+        const data = [];
+        feedbackData.map((feedback) => {
+          data.push({ email: feedback[emailField], feedback: feedback[feedbackName] });
         });
+        
+        
+        
+          
+        const response = await axios.post('user/directfeedback', 
+          {
+            data:data
+          }
+        , {
+          withCredentials: true
+        });
+          console.log(response);
 
         toast.success('Feedback sent successfully!');
-      } catch (error) {
-        toast.error('Error parsing the JSON file.');
-        console.error("Error parsing the JSON file:", error);
+      } catch (err) {
+        const ans=err.response.data;
+        console.log(ans);
+        if(ans.status===401){
+          toast.error(ans.message);
+          navigate("/login");
+          return;
+
+        }
+        toast.error(ans.message);
+       
+       
       }
     };
-
+    
     reader.readAsText(file);
+    
   };
 
   return (
