@@ -1,34 +1,54 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast';
 import axios from 'axios';
 function Navbar() {
 
-     const navigate = useNavigate();
 
-    const handlelogout = async(e) => {
+    const navigate = useNavigate();
+
+    const handlelogout = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('/user/logout',{}, {
+            const response = await axios.post('/user/logout', {}, {
                 withCredentials: true
             })
-          
+
             const content = response.data;
-            
+
             console.log(content);
             toast.success("Logout successfully");
             navigate("/login");
-            
-            
+
+
         } catch (err) {
-            const ans=err.response.data.message;
+            const ans = err.response.data.message;
+            toast.error(ans);
+            navigate("/login");
+
+        }
+
+    }
+
+    const Check = async () => {
+
+        try {
+            const response = await axios.post('/user/userinfo', {}, {
+                withCredentials: true
+            })
+            console.log(response.data.data);
+        }
+        catch (err) {
+            const ans = err.response.data.message;
             toast.error(ans);
             navigate("/login");
             
         }
-
     }
-    
+    useEffect(() => {
+        Check();
+    }, []);
+
     return (
         <div className='flex z-1 fixed w-full '>
 
@@ -39,12 +59,12 @@ function Navbar() {
                 <div className="flex-none">
 
                     <ul className="menu menu-horizontal px-1 ">
-                        
+
                         <li>
                             <details>
                                 <summary>Methods</summary>
                                 <ul className="bg-base-100 rounded-t-none p-2 w-36">
-                                    <li><Link to='/formcreation' >CREATE-FORM</Link></li> 
+                                    <li><Link to='/formcreation' >CREATE-FORM</Link></li>
                                     <li><Link to='/jsondata' >JSON-DATA</Link></li>
                                     <li><Link to='/apigenration' >GENRATE-API</Link></li>
                                 </ul>

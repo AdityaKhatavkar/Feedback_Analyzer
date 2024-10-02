@@ -5,6 +5,15 @@ import User from "../models/user.model.js";
 import ApiRespoance from "../utils/ApiResponse.js";
 import Summary from "../models/Summary.model.js";
 
+const userinfo = Asynchandler(async (req, res) => {
+    const id = req.user._id;
+    const user = await User.findById(id).select("-password -RefreshToken -verficationcode");
+    if (!user) {
+        throw new ApiError(400, "user not found")
+    };
+    res.status(200).json(new ApiRespoance(200, user, "user info"))
+});
+
 
 const registerUser = Asynchandler(async (req, res) => {
 
@@ -67,8 +76,6 @@ const registerUser = Asynchandler(async (req, res) => {
         throw new ApiError(400, "problem in registering user")
     }
 })
-
-
 
 const verifyemailcode = Asynchandler(async (req, res) => {
 
@@ -205,4 +212,4 @@ const logoutUser = Asynchandler(async (req, res) => {
         )
 })
 
-export { registerUser, verifyemailcode, loginUser, logoutUser };
+export { userinfo,registerUser, verifyemailcode, loginUser, logoutUser };

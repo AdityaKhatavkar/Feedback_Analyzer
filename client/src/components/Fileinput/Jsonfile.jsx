@@ -43,13 +43,7 @@ function Jsonfile() {
         toast.success('Feedback sent successfully!');
       } catch (err) {
         const ans=err.response.data;
-        console.log(ans);
-        if(ans.status===401){
-          toast.error(ans.message);
-          navigate("/login");
-          return;
-
-        }
+    
         toast.error(ans.message);
        
        
