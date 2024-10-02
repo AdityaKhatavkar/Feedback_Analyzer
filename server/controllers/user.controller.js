@@ -1,6 +1,6 @@
 import Asynchandler from "../utils/Asynchandler.js"
 import ApiError from "../utils/ApiError.js"
-import sendverficationcode from "../utils/mailverfication.js";
+import {sendverficationcode} from "../utils/mailverfication.js";
 import User from "../models/user.model.js";
 import ApiRespoance from "../utils/ApiResponse.js";
 import Summary from "../models/Summary.model.js";
@@ -36,6 +36,7 @@ const registerUser = Asynchandler(async (req, res) => {
 
     try {
         sendverficationcode(email, verficationcode);
+        console.log(verficationcode,email);
 
         const user = await User.create(
             {
@@ -60,17 +61,20 @@ const registerUser = Asynchandler(async (req, res) => {
 
 const verifyemailcode = Asynchandler(async (req, res) => {
 
-    const { verficationcode, email } = req.body;
-
+    const  verficationcode  = req.body;
+    const id = req.phrams.id;
+    console.log(verficationcode,id);
+    
     if (!verficationcode) {
         throw new ApiError(400, "Please provide verfication code");
     }
 
-    const user = await User.findOne({ email });
+    const user = await User.findById(id);
 
     if (!user) {
         throw new ApiError(400, "Invalid user");
     }
+
     if (user.verficationcode !== verficationcode) {
         throw new ApiError(400, "Invalid verfication code");
     }
@@ -118,11 +122,11 @@ const loginUser = Asynchandler(async (req, res) => {
 
     if (user.emailverfied === false) {
 
-        res.status(400).json(
-            new ApiRespoance(400, finaluser, "Please verify your email")
+        res.status(200).json(
+            new ApiRespoance(200, finaluser, "Please verify your email")
         );
 
-        throw new ApiError(400, "Please verify your email")
+        return;
     }
 
     const RefreshToken = await user.getJwtToken();

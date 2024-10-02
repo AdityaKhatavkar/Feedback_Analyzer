@@ -33,7 +33,7 @@ function App() {
         {/* Routes without Navbar */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/emailverfication" element={<Emailverification />} />
+        <Route path="/emailverfication/:id" element={<Emailverification />} />
         <Route path="/form" element={<Form />} />
       </Routes>
 

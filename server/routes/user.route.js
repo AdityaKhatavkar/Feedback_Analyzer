@@ -8,7 +8,7 @@ const router = Router();
 
 router.route('/register').post(registerUser);
 
-router.route('/veficationcode').post(verifyemailcode);
+router.route('/veficationcode/:id').post(verifyemailcode);
 
 router.route('/login').post(loginUser);
 

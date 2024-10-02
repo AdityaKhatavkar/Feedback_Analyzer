@@ -1,31 +1,42 @@
 import React from 'react'
 import { useState } from 'react'
 import toast from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 function Login() {
+
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+
+    const navigate = useNavigate();
     const handlelogin = async (e) => {
         e.preventDefault();
         if (username === '' || password === '') {
             toast.error("Please fill all the fields")
             return;
         }
-        try{
-          const response = await axios.post('/user/login',{
-              username,
-              password
-          },{
-              withCredentials: true
-          })
-          console.log(response.data)
+        try {
+            const response = await axios.post('/user/login', {
+                username,
+                password
+            }, {
+                withCredentials: true
+            })
+            const content = response.data
 
+            
+            if (content.data.emailverfied === false) {
+                navigate("/emailverfication/" +content.data._id );
+                
+            }
         }
-        catch(err){
-            toast.error(err.response.data)
+        catch (err) {
+            const ans=err.response.data.message
+            
+            toast.error(ans)
+            
         }
-       
+
     }
     return (
         <div className='h-screen flex flex-col items-center justify-center gap-4'>
@@ -54,7 +65,7 @@ function Login() {
                                     <span className="label-text">Password</span>
                                 </label>
                                 <input type="password" placeholder="password" className="input input-bordered" onChange={(e) => setPassword(e.target.value)} required />
-                               
+
                             </div>
                             <div className="form-control mt-6">
                                 <button onClick={handlelogin} className="btn btn-primary">Login</button>

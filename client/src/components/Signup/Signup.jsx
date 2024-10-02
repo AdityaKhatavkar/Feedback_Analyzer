@@ -1,13 +1,15 @@
 import React from 'react'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
-import { Link } from 'react-router-dom'
+import axios from 'axios'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 function Signup() {
     const [fullname, setFullname] = useState('')
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-
+  
+    const navigate=useNavigate();
 
     const handlesignup = async (e) => {
         e.preventDefault();
@@ -16,10 +18,23 @@ function Signup() {
             return;
         }
         try {
+            const response = await axios.post('/user/register', {
+                name:fullname,
+                username:username,
+                email:email,
+                password:password
+            }, {
+                withCredentials: true
+            })
+            console.log(response)
+             console.log(response.data)
+            const content = response.data;
+             navigate("/emailverfication/" +content.data._id );
 
-        }
-        catch {
-
+        } catch (err) {
+             const ans = err.response.data.message
+                console.log(err);
+             toast.error(ans)
         }
 
 

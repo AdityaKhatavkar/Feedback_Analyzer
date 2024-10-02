@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import { toast } from 'react-hot-toast';
+import axios from 'axios';
 function Emailverification() {
     const [code, setCode] = useState('');
     const handlesubmit = async(e) => {
@@ -9,7 +10,21 @@ function Emailverification() {
             toast.error("Please fill the code")
             return;
         }
-        console.log(code);
+        try {
+            const id=window.location.pathname.split("/")[2]
+            const response = await axios.post(`/user/veficationcode/${id}`, {
+                verficationcode:code
+            }, {
+                withCredentials: true
+            })
+            
+
+        }  catch (err) {
+            const ans=err.response.data.message
+            
+            toast.error(ans)
+            
+        }
     }
     return (
         <div className='h-screen flex flex-col items-center justify-center gap-4'>
