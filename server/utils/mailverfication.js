@@ -1,28 +1,35 @@
-import nodemailer from 'nodemailer'
-import ApiError from './ApiError.js'
-const sendverficationcode = (email, verficationcode) => {
+import nodemailer from 'nodemailer';
+import ApiError from './ApiError.js';
+
+const sendVerificationCode = async (email, verificationCode) => {
+   
+
     try {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: process.env.EMAIL,
-                pass: process.env.PASSWORD
+                user: process.env.EMAIL, // Make sure this is set correctly
+                pass: process.env.PASSWORD // Make sure this is set correctly
             }
-        })
+        });
 
-        const mailoption = {
+        const mailOptions = {
             from: process.env.EMAIL,
             to: email,
-            subject: 'verfication code',
-            text: `your verfication code is ${verficationcode}`
-        }
-        transporter.sendMail(mailoption);
-    }
-    catch {
-        console.log("verfication code not sent");
-        throw new ApiError(400, "verfication code not sent")
+            subject: 'Verification Code',
+            text: `Your verification code is ${verificationCode}`
+        };
 
-    }
-}
+       
 
-export default sendverficationcode
+        await transporter.sendMail(mailOptions);
+
+       
+
+    } catch (error) {
+       
+        throw new ApiError(400, 'Check the email again' );
+    }
+};
+
+export default sendVerificationCode;

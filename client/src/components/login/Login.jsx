@@ -25,11 +25,10 @@ function Login() {
             const content = response.data
 
             
-            // if (content.data.emailverfied === false) {
-            //     navigate("/emailverfication/" +content.data._id );
+            if (content.data.emailverfied === false) {
+                navigate("/emailverfication/" +content.data._id );
                 
-            // }
-            console.log(content.data);
+            }
         }
         catch (err) {
             const ans=err.response.data.message

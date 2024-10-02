@@ -1,6 +1,6 @@
 import Asynchandler from "../utils/Asynchandler.js"
 import ApiError from "../utils/ApiError.js"
-import  sendverficationcode  from "../utils/mailverfication.js";
+import sendverficationcode from "../utils/mailverfication.js";
 import User from "../models/user.model.js";
 import ApiRespoance from "../utils/ApiResponse.js";
 import Summary from "../models/Summary.model.js";
@@ -35,7 +35,17 @@ const registerUser = Asynchandler(async (req, res) => {
     const verficationcode = code.toString();
 
     try {
-        // sendverficationcode(email, verficationcode);
+        await sendverficationcode(email, verficationcode);
+    }
+    catch (error) {
+        
+        throw new ApiError(400, "please provide correct email")
+
+    }
+
+    try {
+
+
 
         const user = await User.create(
             {
@@ -121,14 +131,14 @@ const loginUser = Asynchandler(async (req, res) => {
     const finaluser = await User.findById(user._id).select("-password -RefreshToken ");
 
 
-    // if (user.emailverfied === false) {
+    if (user.emailverfied === false) {
 
-    //     res.status(200).json(
-    //         new ApiRespoance(200, finaluser, "Please verify your email")
-    //     );
+        res.status(200).json(
+            new ApiRespoance(200, finaluser, "Please verify your email")
+        );
 
-    //     return;
-    // }
+        return;
+    }
 
     const RefreshToken = await user.getJwtToken();
 
