@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast';
 import axios from 'axios';
 function Navbar() {
 
-
+    const [info, setInfo] = useState({});
     const navigate = useNavigate();
 
     const handlelogout = async (e) => {
@@ -36,7 +36,8 @@ function Navbar() {
             const response = await axios.post('/user/userinfo', {}, {
                 withCredentials: true
             })
-            console.log(response.data.data);
+           
+            setInfo(response.data.data);
         }
         catch (err) {
             const ans = err.response.data.message;
@@ -85,7 +86,7 @@ function Navbar() {
                             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
                             <li>
                                 <a className="justify-between">
-                                    ID :123456
+                                    {info.username}
                                 </a>
                             </li>
                             <li><button onClick={handlelogout}>Logout</button></li>

@@ -34,7 +34,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/emailverfication/:id" element={<Emailverification />} />
-        <Route path="/form" element={<Form />} />
+        <Route path="/form/:id/:verficationcode" element={<Form />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
 

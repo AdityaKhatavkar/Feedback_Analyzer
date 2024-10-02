@@ -66,6 +66,7 @@ const feedbackformcreation = Asynchandler(async (req, res) => {
    )
 })
 
+
 //deleting the form
 const feedbackformdelete = Asynchandler(async (req, res) => {
    await Feedback.deleteMany({ clientid: req.user._id });
@@ -87,15 +88,15 @@ const feedbackformdelete = Asynchandler(async (req, res) => {
 //submitting the form
 const formcollection = Asynchandler(async (req, res) => {
   
-   const _id = req.params.id;
-   const verficationcode = req.params.verficationcode;
+   const {id} = req.params;
+   const {verficationcode} = req.params;
    const { feedback, email } = req.body;
   
-   if (!verficationcode || !_id) {
+   if (!verficationcode || !id) {
       throw new ApiError(400, "No form found")
    }
 
-   const user=await User.findById(_id).select("-password -RefreshToken ");
+   const user=await User.findById(id).select("-password -RefreshToken ");
     if(!user){
        throw new ApiError(400, "user not found")
     }
@@ -108,7 +109,7 @@ const formcollection = Asynchandler(async (req, res) => {
       throw new ApiError(400, "Please provide all fields")
    }
    const newfeedback = await Feedback.create({
-      clientid: _id,
+      clientid: id,
       email: email,
       feedback: feedback
    })

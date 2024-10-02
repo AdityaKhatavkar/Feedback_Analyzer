@@ -7,7 +7,7 @@ import Summary from "../models/Summary.model.js";
 
 const userinfo = Asynchandler(async (req, res) => {
     const id = req.user._id;
-    const user = await User.findById(id).select("-password -RefreshToken -verficationcode");
+    const user = await User.findById(id).select("-password -RefreshToken ");
     if (!user) {
         throw new ApiError(400, "user not found")
     };
