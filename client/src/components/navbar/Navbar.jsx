@@ -16,7 +16,7 @@ function Navbar() {
 
             const content = response.data;
 
-            console.log(content);
+            
             toast.success("Logout successfully");
             navigate("/login");
 

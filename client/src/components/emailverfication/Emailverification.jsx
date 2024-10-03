@@ -20,7 +20,7 @@ function Emailverification() {
             }, {
                 withCredentials: true
             })
-            
+            toast.success("Email verified successfully")
             navigate("/login");
 
         }  catch (err) {

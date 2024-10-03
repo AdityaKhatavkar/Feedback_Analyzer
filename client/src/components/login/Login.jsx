@@ -27,7 +27,7 @@ function Login() {
             
             if (content.data.emailverfied === false) {
                 navigate("/emailverfication/" +content.data._id );
-                
+                return;
             }
             toast.success("Login successfully")
             navigate("/");
