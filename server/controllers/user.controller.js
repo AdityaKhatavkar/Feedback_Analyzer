@@ -43,6 +43,10 @@ const registerUser = Asynchandler(async (req, res) => {
 
     const verficationcode = code.toString();
 
+    if(!verficationcode){
+        throw new ApiError(400, "verification code not created")
+    }
+
     try {
         await sendverficationcode(email, verficationcode);
     }
@@ -53,9 +57,6 @@ const registerUser = Asynchandler(async (req, res) => {
     }
 
     try {
-
-
-
         const user = await User.create(
             {
                 name,
@@ -64,6 +65,10 @@ const registerUser = Asynchandler(async (req, res) => {
                 password,
                 verficationcode
             });
+
+        if (!user) {
+            throw new ApiError(400, "user not created")
+        }
 
         const finaluser = await User.findById(user._id).select("-password -RefreshToken -verficationcode");
         res
@@ -85,7 +90,7 @@ const verifyemailcode = Asynchandler(async (req, res) => {
     
     const check=await User.findById(id);
 
-    if(check.emailverfied){
+    if(check.emailverfied===true){
         throw new ApiError(400, "user already verfied")
     }
 

@@ -13,14 +13,19 @@ const feedbackcollection = Asynchandler(async (req, res) => {
    if(!dataarray || !data){
       throw new ApiError(400,"No data found")
    }
+
    const user=await User.findById(id).select("-password -RefreshToken -verficationcode");
+
    if(!user){
       throw new ApiError(400,"user not found")
    }
+
    const feedback=await Feedback.find({clientid:id});
-   if(feedback.length>0){
+
+   if(feedback){
       await Feedback.deleteMany({ clientid: id });
    }
+
    dataarray.map(async(element)=>{  
       await Feedback.create({
          clientid:id,
@@ -30,12 +35,6 @@ const feedbackcollection = Asynchandler(async (req, res) => {
    }
    )
 
-   
-
-   
-
-   
-  
 
    res.status(200).json(
       new ApiRespoance(200, [], "feedback submitted")
@@ -49,12 +48,15 @@ const feedbackformcreation = Asynchandler(async (req, res) => {
    await Feedback.deleteMany({ clientid: req.user._id });
     
    let token = Math.floor(100000 + Math.random() * 900000);
-
+   
    while (await User.findOne({ verficationcode: token })) {
       token = Math.floor(100000 + Math.random() * 900000);
    }
 
    const user = await User.findById(req.user._id);
+   if(!user){
+      throw new ApiError(400,"user not found")
+   }
    user.tokenid = "";
    user.verficationcode = token;
 
@@ -73,6 +75,9 @@ const feedbackformdelete = Asynchandler(async (req, res) => {
 
    const user = await User.findById(req.user._id);
 
+   if(!user){
+      throw new ApiError(400,"user not found")
+   }
    user.verficationcode = "";
 
    await user.save();
@@ -108,6 +113,7 @@ const formcollection = Asynchandler(async (req, res) => {
    if (!feedback || !email) {
       throw new ApiError(400, "Please provide all fields")
    }
+
    const newfeedback = await Feedback.create({
       clientid: id,
       email: email,
@@ -125,7 +131,13 @@ const formcollection = Asynchandler(async (req, res) => {
 
 //generating token
 const apigenerate = Asynchandler(async (req, res) => {
+
    const user = await User.findById(req.user._id).select("-password -RefreshToken ");
+  
+   if (!user) {
+      throw new ApiError(400, "user not found")
+   }
+
    await Feedback.deleteMany({ clientid: req.user._id });
 
    let token = Math.floor(100000 + Math.random() * 900000);
@@ -150,6 +162,10 @@ const apigenerate = Asynchandler(async (req, res) => {
 const apidelete = Asynchandler(async (req, res) => {
 
    const user = await User.findById(req.user._id).select("-password -RefreshToken -verficationcode");
+  
+   if(!user){
+      throw new ApiError(400,"user not found")
+   }
 
    await Feedback.deleteMany({ clientid: req.user._id });
 

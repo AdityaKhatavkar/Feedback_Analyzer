@@ -1,10 +1,12 @@
 import React from 'react'
-
-function Allfeedback() {
+import toast from 'react-hot-toast'
+function Allfeedback(data) {
+    const feedbacks=data.data;
+    
     return (
         <div>
             <div>
-                <div className="overflow-x-auto">
+                <div className="overflow-x-auto ">
                     <table className="table table-zebra">
                         {/* head */}
                         <thead>
@@ -15,34 +17,15 @@ function Allfeedback() {
                             </tr>
                         </thead>
                         <tbody>
-                            {/* row 1 */}
-                            <tr>
-                                <th>1</th>
-                                <td>siddhesh112004@gmail.com</td>
-                                <td>Lorem ipsum dolor sit amet consectetur, adipisicing elit. At, sed!</td>
-
-                            </tr>
-                            {/* row 2 */}
-                            <tr>
-                                <th>1</th>
-                                <td>siddhesh112004@gmail.com</td>
-                                <td>Lorem ipsum dolor sit amet consectetur, adipisicing elit. At, sed!</td>
-
-                            </tr>
-
-                            <tr>
-                                <th>1</th>
-                                <td>siddhesh112004@gmail.com</td>
-                                <td>Lorem ipsum dolor sit amet consectetur, adipisicing elit. At, sed!</td>
-
-                            </tr>
-
-                            <tr>
-                                <th>1</th>
-                                <td>siddhesh112004@gmail.com</td>
-                                <td>Lorem ipsum dolor sit amet consectetur, adipisicing elit. At, sed!</td>
-
-                            </tr>
+                           
+                            
+                            {feedbacks.map((feedback, index) => (
+                                <tr key={index}>
+                                    <th>{index + 1}</th>
+                                    <td>{feedback.email}</td>
+                                    <td>{feedback.feedback}</td>                                   
+                                </tr>
+                            ))}
 
 
                         </tbody>

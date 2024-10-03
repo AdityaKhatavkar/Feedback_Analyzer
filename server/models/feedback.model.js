@@ -22,9 +22,7 @@ const feedbackSchema = new mongoose.Schema({
     catagry:{
         type:String,
         enum:["good","bad","neutral","other"],
-        default:"other",
-    
-        
+        default:"other",  
     }
 },
 {timestamps:true}

@@ -24,4 +24,5 @@ const SummarySchema = new mongoose.Schema({
 
 const Summary = mongoose.model("Summary", SummarySchema);
 
+
 export default Summary;
