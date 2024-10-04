@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Route, Routes, Outlet, Navigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import Login from './components/login/Login.jsx';
@@ -12,34 +12,44 @@ import Dashboard from './components/dashboard/Dashboard.jsx';
 import Jsonfile from './components/Fileinput/Jsonfile.jsx';
 
 function App() {
+  const [theme, setTheme] = useState('dark'); // State to track the theme
+  
+  // Function to toggle the theme
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === 'dark' ? 'pastel' : 'dark'));
+  };
+
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Routes with Navbar */}
-        <Route
-          element={
-            <>
-              <Navbar /> {/* Navbar will be displayed for these routes */}
-              <Outlet />  {/* This renders the actual content of the child routes */}
-            </>
-          }
-        >
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/apigenration" element={<Apigentration />} />
-          <Route path="/formcreation" element={<Formcreation />} />
-          <Route path="/jsondata" element={<Jsonfile />} />
-        </Route>
+    <div data-theme={theme}> {/* Apply the theme dynamically */}
+      <BrowserRouter>
+        <Routes>
+          {/* Routes with Navbar */}
+          <Route
+            element={
+              <>
+                {/* Pass toggleTheme function to Navbar as a prop */}
+                <Navbar toggleTheme={toggleTheme} /> 
+                <Outlet />  {/* This renders the actual content of the child routes */}
+              </>
+            }
+          >
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/apigenration" element={<Apigentration />} />
+            <Route path="/formcreation" element={<Formcreation />} />
+            <Route path="/jsondata" element={<Jsonfile />} />
+          </Route>
 
-        {/* Routes without Navbar */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/emailverfication/:id" element={<Emailverification />} />
-        <Route path="/form/:id/:verficationcode" element={<Form />} />
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
+          {/* Routes without Navbar */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/emailverfication/:id" element={<Emailverification />} />
+          <Route path="/form/:id/:verficationcode" element={<Form />} />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
 
-      <Toaster />
-    </BrowserRouter>
+        <Toaster />
+      </BrowserRouter>
+    </div>
   );
 }
 
