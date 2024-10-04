@@ -63,10 +63,10 @@ function Formcreation() {
             <div className='grid grid-cols-7 h-full'>
                 <div className='md:col-span-3 col-span-7 flex justify-center items-center mt-28 md:mt-0'>
                     <div className="bg-base-200 shadow-2xl p-10">
-                        <h1 className='text-3xl mb-7 font-bold'>Feedback-Form</h1>
+                        <h1 className='text-3xl mb-7 font-bold'>Feedback-url</h1>
                         <div>"Create your own feedback categories like good, bad, and neutral"</div>
                         <div className='text-red-600 mt-3'>Note:</div>
-                        <div>If you create a new form, the old form will be deleted</div>
+                        <div>If you create a new url, the old url will be deleted</div>
                     </div>
                 </div>
 
