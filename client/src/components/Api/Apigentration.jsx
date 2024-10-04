@@ -59,7 +59,7 @@ function Formcreation() {
     }
 
     return (
-        <div className='h-screen'>
+        <div className='min-h-screen'>
             <div className='grid grid-cols-7 h-full'>
                 <div className='md:col-span-3 col-span-7 flex justify-center items-center mt-28 md:mt-0'>
                     <div className="bg-base-200 shadow-2xl p-10">

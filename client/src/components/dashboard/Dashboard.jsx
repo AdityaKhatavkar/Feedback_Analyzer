@@ -65,7 +65,7 @@ function Dashboard() {
     };
 
     return (
-        <div className='h-screen '>
+        <div className='min-h-screen'>
             <div className='shadow-2xl pt-28 md:pt-40 w-full flex justify-center items-center p-4'>
                 <div className="stats stats-vertical lg:stats-horizontal w-full">
                     <div className="stat flex justify-center items-center flex-col text-green-600">

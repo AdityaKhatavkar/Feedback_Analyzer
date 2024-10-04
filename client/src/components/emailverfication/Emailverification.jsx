@@ -31,7 +31,7 @@ function Emailverification() {
         }
     }
     return (
-        <div className='h-screen flex flex-col items-center justify-center gap-4'>
+        <div className='min-h-screen flex flex-col items-center justify-center gap-4'>
             <div className='font-bold text-2xl'>Email verification</div>
             <div className='font-bold text-2xl flex flex-row gap-4'>
                 <input type="text" placeholder="Verification code" onChange={(e)=>{setCode(e.target.value)}} className="input input-bordered w-full max-w-xs" />

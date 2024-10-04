@@ -20,7 +20,7 @@ function App() {
   };
 
   return (
-    <div data-theme={theme}> {/* Apply the theme dynamically */}
+    <div data-theme={theme} className='h-full'> {/* Apply the theme dynamically */}
       <BrowserRouter>
         <Routes>
           {/* Routes with Navbar */}

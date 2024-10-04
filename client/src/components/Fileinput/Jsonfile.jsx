@@ -55,7 +55,7 @@ function Jsonfile() {
   };
 
   return (
-    <div className='h-screen flex justify-center items-center'>
+    <div className='min-h-screen flex justify-center items-center'>
       <div className="hero min-h-screen">
         <div className="content text-center">
           <div className="max-w-md">
