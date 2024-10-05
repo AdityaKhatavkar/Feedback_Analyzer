@@ -16,7 +16,7 @@ function App() {
   
   // Function to toggle the theme
   const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === 'dark' ? 'pastel' : 'dark'));
+    setTheme((prevTheme) => (prevTheme === 'pastel' ? 'dark' : 'pastel'));
   };
 
   return (

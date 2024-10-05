@@ -24,7 +24,14 @@ function Jsonfile() {
         const feedbackData = JSON.parse(e.target.result);
          console.log(feedbackData);
         const data = [];
+        if(!feedbackData[0][emailField] || !feedbackData[0][feedbackName]){
+          toast.error('Invalid JSON file');
+          return;
+
+        }
+        feedbackData[0][emailField]
         feedbackData.map((feedback) => {
+         
           data.push({ email: feedback[emailField], feedback: feedback[feedbackName] });
         });
         
