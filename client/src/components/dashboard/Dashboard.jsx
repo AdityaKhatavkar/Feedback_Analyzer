@@ -28,8 +28,11 @@ function Dashboard() {
             setBadsummary(content.data.badsummary);
             setNeutralsummary(content.data.neutralsummary);
         } catch (err) {
-            const ans = err.response.data.message;
-            toast.error(ans);
+            if(err.response.status!==401){
+                const ans = err.response.data.message;
+                 toast.error(ans);
+            }
+            
         }
     };
 
@@ -59,8 +62,10 @@ function Dashboard() {
             setNeutralfeedback(neutral);
             setAllfeedback(content);
         } catch (err) {
-            const ans = err.response.data.message;
-            toast.error(ans);
+            if(err.response.status!==401){
+                const ans = err.response.data.message;
+                 toast.error(ans);
+            }
         }
     };
 
