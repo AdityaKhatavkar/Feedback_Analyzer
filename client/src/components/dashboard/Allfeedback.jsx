@@ -4,8 +4,28 @@ function Allfeedback(data) {
     const feedbacks = data.data;
 
     const openGmailCompose = (email, feedbackText) => {
-        const subject = `Response for our feedback: ${feedbackText}`;
-        const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${encodeURIComponent(subject)}`;
+        const subject = `Response for your feedback: ${feedbackText}`;
+
+        // HTML content as plain text for email body
+        const body = `
+            Thank you for your feedback!
+
+            Dear user,
+
+            We really appreciate you taking the time to provide feedback. Here is our response:
+
+            Your Feedback:
+            "${feedbackText}"
+
+            We hope our response meets your expectations. If you have any more questions, feel free to reach out.
+
+            Best Regards,
+            Your Feedback Team
+        `;
+
+        // Encode the body and subject for URL passing
+        const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
         window.open(gmailUrl, "_blank");
     };
 
@@ -14,10 +34,10 @@ function Allfeedback(data) {
             <div>
                 <div className="overflow-x-auto">
                     <table className="table table-zebra">
-                        {/* head */}
+                        {/* Table Head */}
                         <thead>
                             <tr className="font-bold text-xl">
-                                <th></th>
+                                <th>#</th>
                                 <th>Email</th>
                                 <th>Feedback</th>
                             </tr>
