@@ -1,0 +1,5 @@
+transformers
+numpy
+pandas
+torch
+sentencepiece
