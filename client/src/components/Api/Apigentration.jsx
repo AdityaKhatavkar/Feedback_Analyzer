@@ -35,7 +35,7 @@ function Formcreation() {
             console.log(content);
             setid(content.data._id);
             settokenid(content.data.tokenid);
-            toast.success("Form created successfully");
+            toast.success("API created successfully");
         } catch (err) {
             const ans = err.response.data.message;
             toast.error(ans);
@@ -84,7 +84,7 @@ function Formcreation() {
                             {id && tokenid && (
                                 <div className='overflow-x-auto w-72 md:w-full shadow-2xl '>
                                     <div className='text-blue-600   ' >
-                                        http://localhost:8000/url/{id}/{tokenid}
+                                      http://localhost:5000/user/{id}/{tokenid}
                                     </div>
                                 </div>
                             )}

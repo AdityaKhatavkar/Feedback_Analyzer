@@ -187,7 +187,8 @@ const apifeedback=Asynchandler(async(req,res)=>{
    const {id}=req.params;
    const {tokenid}=req.params;
    const {data}=req.body;
-
+   console.log(id);
+   console.log(data);
    if(!id || !tokenid){
       throw new ApiError(400,"No url found");
    }
@@ -207,7 +208,7 @@ const apifeedback=Asynchandler(async(req,res)=>{
    if(user.tokenid!==tokenid){
       throw new ApiError(400,"invalid token");
    }
-   const actualdata=data.data;
+   const actualdata=data;
    if(!actualdata){
       throw new ApiError(400,"No data found");
    }
