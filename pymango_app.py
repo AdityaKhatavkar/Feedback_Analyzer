@@ -39,6 +39,7 @@ def summarize_feedback(feedback_list):
 def analyze_feedback():
     try:
         feedback_data = feedback_collection.find()
+       
         positive_feedback, negative_feedback, other_feedback = [], [], []
         client_id = feedback_data[0].get('clientid', '')
         for feedback in feedback_data:
@@ -63,12 +64,18 @@ def analyze_feedback():
         negative_summary = summarize_feedback(negative_feedback)
         other_summary = summarize_feedback(other_feedback)
 
-        summary_collection.insert_one({
-            "clientid": client_id,
-            "goodsummary": positive_summary,
-            "badsummary": negative_summary,
-            "neutralsummary": other_summary
-        })
+        summary_collection.update_one(
+        {"clientid": client_id},  # Filter: Match the document by clientid
+        {
+         "$set": {  # Update the fields
+                "goodsummary": positive_summary,
+                "badsummary": negative_summary,
+                "neutralsummary": other_summary
+            }
+        },
+        upsert=True  # Insert if no matching document is found
+        )
+
 
         logging.info("Feedback analysis and summarization completed successfully.")
     except Exception as e:
