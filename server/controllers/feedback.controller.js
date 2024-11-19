@@ -25,6 +25,9 @@ const feedbackcollection = Asynchandler(async (req, res) => {
    if(feedback){
       await Feedback.deleteMany({ clientid: id });
    }
+   user.tokenid="";
+   user.verficationcode="";
+   await user.save();
 
    dataarray.map(async(element)=>{  
       await Feedback.create({

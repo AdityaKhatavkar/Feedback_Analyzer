@@ -16,7 +16,7 @@ function App() {
   
   // Function to toggle the theme
   const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === 'pastel' ? 'dark' : 'pastel'));
+    setTheme((prevTheme) => (prevTheme === 'dark' ? 'pastel' : 'dark'));
   };
 
   return (
@@ -27,9 +27,9 @@ function App() {
           <Route
             element={
               <>
-                {/* Pass toggleTheme function to Navbar as a prop */}
+               
                 <Navbar toggleTheme={toggleTheme} /> 
-                <Outlet />  {/* This renders the actual content of the child routes */}
+                <Outlet /> 
               </>
             }
           >

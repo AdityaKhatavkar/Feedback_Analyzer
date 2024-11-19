@@ -28,6 +28,7 @@ function Navbar({ toggleTheme }) {
       setInfo(response.data.data);
     } catch (err) {
       const ans = err.response.data.message;
+      console.log(ans);
       toast.error(ans);
       navigate("/login");
     }
@@ -83,7 +84,7 @@ function Navbar({ toggleTheme }) {
           <ul className="menu menu-horizontal px-1">
             <li>
               <details>
-                <summary>Methods</summary>
+                <summary>Options</summary>
                 <ul className="bg-base-100 rounded-t-none p-2 w-36">
                   <li><Link to='/formcreation'>CREATE-FORM</Link></li>
                   <li><Link to='/jsondata'>JSON-DATA</Link></li>

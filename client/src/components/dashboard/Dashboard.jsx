@@ -28,8 +28,11 @@ function Dashboard() {
             setBadsummary(content.data.badsummary);
             setNeutralsummary(content.data.neutralsummary);
         } catch (err) {
-            const ans = err.response.data.message;
-            toast.error(ans);
+            if(err.response.status!==401){
+                const ans = err.response.data.message;
+                 toast.error(ans);
+            }
+            
         }
     };
 
@@ -59,8 +62,10 @@ function Dashboard() {
             setNeutralfeedback(neutral);
             setAllfeedback(content);
         } catch (err) {
-            const ans = err.response.data.message;
-            toast.error(ans);
+            if(err.response.status!==401){
+                const ans = err.response.data.message;
+                 toast.error(ans);
+            }
         }
     };
 
@@ -69,13 +74,13 @@ function Dashboard() {
             <div className='shadow-2xl pt-28 md:pt-40 w-full flex justify-center items-center p-4'>
                 <div className="stats stats-vertical lg:stats-horizontal w-full">
                     <div className="stat flex justify-center items-center flex-col text-green-600">
-                        <div className="stat-title font-bold text-xl">Good-Feedback</div>
+                        <div className="stat-title font-bold text-xl">Positive-Feedback</div>
                         <div className="stat-value ">{goodfeedback.length}</div>
                         <div className="stat-desc"> ({(goodfeedback.length / allfeedback.length) * 100 || 0}%)</div>
                     </div>
 
                     <div className="stat flex justify-center items-center flex-col text-red-600">
-                        <div className="stat-title font-bold text-xl">Bad-Feedback</div>
+                        <div className="stat-title font-bold text-xl">Negative-Feedback</div>
                         <div className="stat-value">{badfeedback.length}</div>
                         <div className="stat-desc"> ({(badfeedback.length / allfeedback.length) * 100 || 0}%)</div>
                     </div>
@@ -105,7 +110,7 @@ function Dashboard() {
                             <form method="dialog">
                                 <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                             </form>
-                            <h3 className="font-bold text-lg text-green-600">Good-Feedback</h3>
+                            <h3 className="font-bold text-lg text-green-600">Positive-Feedback</h3>
                             <div className="py-4"><Allfeedback data={goodfeedback} /></div>
                         </div>
                     </dialog>
@@ -115,7 +120,7 @@ function Dashboard() {
                     <button className="" onClick={() => document.getElementById('my_modal_2').showModal()}>
                         <div className="bg-base-100 w-full shadow-2xl">
                             <div className="card-body">
-                                <h2 className="card-title flex justify-center items-center font-bold text-red-600">Bad-Feedback</h2>
+                                <h2 className="card-title flex justify-center items-center font-bold text-red-600">Negative-Feedback</h2>
                                 <p>{badsummary}</p>
                             </div>
                         </div>
@@ -125,7 +130,7 @@ function Dashboard() {
                             <form method="dialog">
                                 <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                             </form>
-                            <h3 className="font-bold text-lg text-red-600">Bad-Feedback</h3>
+                            <h3 className="font-bold text-lg text-red-600">Negative-Feedback</h3>
                             <div className="py-4"><Allfeedback data={badfeedback} /></div>
                         </div>
                     </dialog>
