@@ -14,7 +14,7 @@ const SummarySchema = new mongoose.Schema({
         type: String,
         default: ''
     },
-    netrual: {
+    neutralsummary: {
         type: String,
         default: ''
     }

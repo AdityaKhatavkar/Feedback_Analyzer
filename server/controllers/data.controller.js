@@ -22,9 +22,9 @@ const allfeedback=Asynchandler(async(req,res)=>{
 const allsummary=Asynchandler(async(req,res)=>{
 
     const _id=req.user._id;
-
+    
     const summary=await Summary.findOne({clientid:_id});
-  
+    
     if(!summary){
         throw new ApiError(400,"summary not found")
     }
@@ -34,4 +34,21 @@ const allsummary=Asynchandler(async(req,res)=>{
     )
 
 })
-export  {allfeedback,allsummary};
+
+const addsummary=Asynchandler(async(req,res)=>{
+
+    const _id=req.user._id;
+    const {goodsummary,badsummary,neutralsummary}=req.body;
+    console.log(_id)
+    const summary=await Summary.create({clientid:_id,goodsummary,badsummary,neutralsummary});
+    console.log(summary)
+    if(!summary){
+        throw new ApiError(400,"summary not found")
+    }
+
+    res.status(200).json(
+        new ApiRespoance(200,summary,"summary added")
+    )
+
+})
+export  {allfeedback,allsummary,addsummary};

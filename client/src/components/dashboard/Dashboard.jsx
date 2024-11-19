@@ -22,7 +22,7 @@ function Dashboard() {
             const response = await axios.post('/user/allsummary', {}, {
                 withCredentials: true,
             });
-
+            console.log(response.data);
             const content = response.data;
             setGoodsummary(content.data.goodsummary);
             setBadsummary(content.data.badsummary);
@@ -42,15 +42,15 @@ function Dashboard() {
                 withCredentials: true,
             });
             const content = response.data.data;
-
+           
             const good = [];
             const bad = [];
             const neutral = [];
 
             content.forEach((feedback) => {
-                if (feedback.catagry === 'good') {
+                if (feedback.catagry === 'positive') {
                     good.push(feedback);
-                } else if (feedback.catagry === 'bad') {
+                } else if (feedback.catagry === 'negative') {
                     bad.push(feedback);
                 } else {
                     neutral.push(feedback);
