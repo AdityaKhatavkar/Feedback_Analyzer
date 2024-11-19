@@ -187,8 +187,8 @@ const apifeedback=Asynchandler(async(req,res)=>{
    const {id}=req.params;
    const {tokenid}=req.params;
    const {data}=req.body;
-   console.log(id);
-   console.log(data);
+   const {emailfeildname,feedbackfeildname}=req.body;
+   
    if(!id || !tokenid){
       throw new ApiError(400,"No url found");
    }
@@ -212,11 +212,18 @@ const apifeedback=Asynchandler(async(req,res)=>{
    if(!actualdata){
       throw new ApiError(400,"No data found");
    }
+   if(actualdata.length===0){
+      throw new ApiError(400,"No data found");
+   }
+   if(actualdata[0][emailfeildname]===undefined || actualdata[0][feedbackfeildname]===undefined){
+      throw new ApiError(400,"Please provide valid data");
+   }
    actualdata.map(async(element)=>{
+      
       const feedback=await Feedback.create({
          clientid:user._id,
-         email:element.email,
-         feedback:element.feedback
+         email:element[emailfeildname],
+         feedback:element[feedbackfeildname]
       })
    })
 
