@@ -39,10 +39,21 @@ def summarize_feedback(feedback_list):
 def analyze_feedback():
     try:
         feedback_data = feedback_collection.find()
-       
-        positive_feedback, negative_feedback, other_feedback = [], [], []
-        client_id = feedback_data[0].get('clientid', '')
+        
+        # Print feedback data as it comes from the database
+        logging.info("Printing feedback data from the database:")
         for feedback in feedback_data:
+            print(feedback)  # This will print each feedback document
+        
+        # Reset the cursor as it was already iterated
+        feedback_data = feedback_collection.find()
+        positive_feedback, negative_feedback, other_feedback = [], [], []
+        client_id = feedback_data[0].get('clientid', '')  # Ensure client_id retrieval
+        i = 0
+
+        for feedback in feedback_data:
+            i += 1
+            print(i)
             feedback_text = feedback.get('feedback', '')
             if not feedback_text:
                 continue
@@ -60,9 +71,18 @@ def analyze_feedback():
                 {"$set": {"catagry": sentiment}}
             )
 
+        print("size")
+        print(len(other_feedback))
+        print(len(positive_feedback))
+        print(len(negative_feedback))
+
         positive_summary = summarize_feedback(positive_feedback)
         negative_summary = summarize_feedback(negative_feedback)
         other_summary = summarize_feedback(other_feedback)
+
+        print(positive_summary)
+        print(negative_summary)
+        print(other_summary)
 
         summary_collection.insert_one({
             "clientid": client_id,
@@ -71,20 +91,35 @@ def analyze_feedback():
             "neutralsummary": other_summary
         })
         summary_collection.update_one(
-        {"clientid": client_id},  # Filter: Match the document by clientid
-        {
-         "$set": {  # Update the fields
-                "goodsummary": positive_summary,
-                "badsummary": negative_summary,
-                "neutralsummary": other_summary
-            }
-        },
-        upsert=True  # Insert if no matching document is found
+            {"clientid": client_id},  # Filter: Match the document by clientid
+            {
+                "$set": {  # Update the fields
+                    "goodsummary": positive_summary,
+                    "badsummary": negative_summary,
+                    "neutralsummary": other_summary
+                }
+            },
+            upsert=True  # Insert if no matching document is found
         )
 
         logging.info("Feedback analysis and summarization completed successfully.")
     except Exception as e:
         logging.error(f"An error occurred during feedback analysis: {e}")
 
+def listen_for_changes():
+    """Listen for changes in the 'feedbacks' collection and trigger analysis."""
+    try:
+        # Create a change stream to monitor changes in the feedbacks collection
+        change_stream = feedback_collection.watch()
+
+        logging.info("Listening for changes in the feedbacks collection...")
+        for change in change_stream:
+            # Whenever there is a change, run the analysis again
+            logging.info(f"Change detected: {change}")
+            analyze_feedback()
+            listen_for_changes()
+    except Exception as e:
+        logging.error(f"An error occurred while listening for changes: {e}")
+
 if __name__ == "__main__":
-    analyze_feedback()
+    listen_for_changes()
