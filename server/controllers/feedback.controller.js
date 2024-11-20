@@ -3,48 +3,59 @@ import Feedback from "../models/feedback.model.js";
 import ApiError from "../utils/ApiError.js";
 import ApiRespoance from "../utils/ApiResponse.js";
 import User from "../models/user.model.js";
+import {handletrigger} from "../controllers/python.controller.js";
 
-//direct json data with array of object is send by the user
 const feedbackcollection = Asynchandler(async (req, res) => {
-   const  data  = req.body;
-   const id=req.user._id;
-   const dataarray=data.data;
-  
-   if(!dataarray || !data){
-      throw new ApiError(400,"No data found")
+   const data = req.body;
+   const id = req.user._id;
+   const dataarray = data.data;
+
+   if (!dataarray || !data) {
+       throw new ApiError(400, "No data found");
    }
 
-   const user=await User.findById(id).select("-password -RefreshToken -verficationcode");
+   const user = await User.findById(id).select("-password -RefreshToken -verficationcode");
 
-   if(!user){
-      throw new ApiError(400,"user not found")
+   if (!user) {
+       throw new ApiError(400, "User not found");
    }
 
-   const feedback=await Feedback.find({clientid:id});
+   // Trigger the Python script
+   // let pythonResult;
+   // try {
+   //     pythonResult = await handletrigger();
+   //     console.log("Python script output:", pythonResult);
+   // } catch (error) {
+   //     throw new ApiError(500, `Error executing Python script: ${error}`);
+   // }
 
-   if(feedback){
-      await Feedback.deleteMany({ clientid: id });
+   // Remove old feedbacks
+   const feedback = await Feedback.find({ clientid: id });
+   if (feedback) {
+       await Feedback.deleteMany({ clientid: id });
    }
-   user.tokenid="";
-   user.verficationcode="";
+
+   // Reset user details
+   user.tokenid = "";
+   user.verficationcode = "";
    await user.save();
 
-   dataarray.map(async(element)=>{  
-      await Feedback.create({
-         clientid:id,
-         email:element.email,
-         feedback:element.feedback
-      })
-   }
-   )
+   // Create new feedbacks
+   await Promise.all(
+       dataarray.map(async (element) => {
+           await Feedback.create({
+               clientid: id,
+               email: element.email,
+               feedback: element.feedback,
+           });
+       })
+   );
 
-
+   // Respond with success
    res.status(200).json(
-      new ApiRespoance(200, [], "feedback submitted")
-   )
-
-})
-
+       new ApiRespoance(200, [], "Feedback submitted successfully")
+   );
+});
 //creating the form for the user
 const feedbackformcreation = Asynchandler(async (req, res) => {
 
