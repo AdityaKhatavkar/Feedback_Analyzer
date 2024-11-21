@@ -1,6 +1,7 @@
 import os
 import pickle
 from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
@@ -9,7 +10,7 @@ def model_trainer(X, y):
 
     os.makedirs("artifacts", exist_ok=True)
 
-    model = LogisticRegression()
+    model = DecisionTreeClassifier(max_depth=10)
     model.fit(X_train, y_train)
     predicted_sentiment = model.predict(X_test)
     accuracy = accuracy_score(y_test, predicted_sentiment)
