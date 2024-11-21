@@ -36,8 +36,7 @@ def data_preprocessing(file_path):
 
     X = pipeline.fit_transform(df['Review'])
     y = df['Sentiment']
-    le = LabelEncoder()
-    y = le.fit_transform(y)
+    
    
 
     # Save the preprocessing pipeline
