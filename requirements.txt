@@ -1,5 +1,6 @@
+pytorch
 transformers
 numpy
 pandas
-torch
 sentencepiece
+pickle
