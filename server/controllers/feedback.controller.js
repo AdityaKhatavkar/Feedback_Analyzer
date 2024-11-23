@@ -57,37 +57,43 @@ const summarizingfeedback = Asynchandler(async (req, res) => {
    //    throw new ApiError(400,"Please analyze the feedback first")
    // }
    
-   const feedbacks = await Feedback.find({ clientid: req.user._id }).select("feedback _id");
-   
+   const goodfeedbacks = await Feedback.find({ clientid: req.user._id,catagry:"good" }).select("feedback _id");
+   const badfeedbacks = await Feedback.find({ clientid: req.user._id,catagry:"bad" }).select("feedback _id");
 
-   if (!feedbacks || !Array.isArray(feedbacks)) {
+   if (!goodfeedbacks || !Array.isArray(goodfeedbacks)) {
+      return res.status(400).json({ error: 'Feedbacks must be an array.' });
+   }
+
+   if (!badfeedbacks || !Array.isArray(badfeedbacks)) {
       return res.status(400).json({ error: 'Feedbacks must be an array.' });
    }
 
    try {
       // Process feedbacks using summarizeFeedback function
-      const summary = await summarizeFeedback(feedbacks);
-
-      const { good, bad } = summary;
-      console.log(good, bad);
+      const goodsummary = await summarizeFeedback(goodfeedbacks);
+      const badsummary = await summarizeFeedback(badfeedbacks);
+      const { sentence } = goodsummary;
+      const {sentence: sentence1} = badsummary;
+      
+      console.log( sentence);
       const newsummary = await Summary.findOne({ clientid: req.user._id });
       if (!newsummary) {
          await Summary.create({
             clientid: req.user._id,
-            goodsummary: good,
-            badsummary: bad,
+            goodsummary: sentence,
+            badsummary: sentence1,
             neutralsummary: "",
          });
       } else {
-         newsummary.goodsummary = good;
-         newsummary.badsummary = bad;
+         newsummary.goodsummary = sentence;
+         newsummary.badsummary = sentence1;
          await newsummary.save();
       }
-      // Send success response
+      
       res.status(200).json({
          status: 200,
          message: "Feedback summarized successfully",
-         data: summary,
+         data: { good: sentence, bad: sentence1 },
       });
    } catch (error) {
       // Send error response

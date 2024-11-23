@@ -3,22 +3,17 @@ import json
 
 def summarize_feedback(feedbacks):
     summary = {
-        "good": "",
-        "bad": ""
+        "sentence":'siddesh'
     }
 
     for feedback_entry in feedbacks:
         feedback_text = feedback_entry.get('feedback', '')
-
+         
         # Categorize feedback into good or bad summaries
-        if "excellent" in feedback_text.lower() or "good" in feedback_text.lower():
-            summary["good"] += feedback_text + " "
-        elif "poor" in feedback_text.lower() or "bad" in feedback_text.lower():
-            summary["bad"] += feedback_text + " "
+        
 
     # Trim any extra whitespace
-    summary["good"] = summary["good"].strip()
-    summary["bad"] = summary["bad"].strip()
+ 
     
     return summary
 
