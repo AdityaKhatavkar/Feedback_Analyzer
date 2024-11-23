@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import toast from 'react-hot-toast';
 
 function Formcreation() {
@@ -18,7 +18,7 @@ function Formcreation() {
             const ans = err.response.data.message;
             toast.error(ans);
         }
-    }
+    };
 
     useEffect(() => {
         Check();
@@ -26,37 +26,40 @@ function Formcreation() {
 
     const createurl = async (e) => {
         e.preventDefault();
+        const loaderToast = toast.loading('Creating URL...');
         try {
             const response = await axios.post('/user/apigenerate', {}, {
                 withCredentials: true
             });
             const content = response.data;
-            
-            console.log(content);
             setid(content.data._id);
             settokenid(content.data.tokenid);
             toast.success("API created successfully");
         } catch (err) {
             const ans = err.response.data.message;
             toast.error(ans);
+        } finally {
+            toast.dismiss(loaderToast);
         }
-    }
+    };
 
     const deleteurl = async (e) => {
         e.preventDefault();
+        const loaderToast = toast.loading('Deleting URL...');
         try {
             await axios.post('/user/apidelete', {}, {
                 withCredentials: true
             });
             setid('');
             settokenid('');
-
             toast.success("Form deleted successfully");
         } catch (err) {
             const ans = err.response.data.message;
             toast.error(ans);
+        } finally {
+            toast.dismiss(loaderToast);
         }
-    }
+    };
 
     return (
         <div className='min-h-screen'>
@@ -75,16 +78,16 @@ function Formcreation() {
                         <div className="hero-content text-center flex flex-col">
                             <div className="max-w-md">
                                 <h1 className="text-5xl font-bold">Generate the url</h1>
-                                <p className="py-6">you can also send the feedback using this url two field email,feedback</p>
-                                <button onClick={createurl} className="btn btn-primary m-2">Create url</button>
-                                <button onClick={deleteurl} className="btn btn-error m-2">Delete url</button>
+                                <p className="py-6">You can also send the feedback using this URL with two fields: email and feedback.</p>
+                                <button onClick={createurl} className="btn btn-primary m-2">Create URL</button>
+                                <button onClick={deleteurl} className="btn btn-error m-2">Delete URL</button>
                             </div>
 
-                            {/* Conditionally rendering the URL if both id and code are not empty */}
+                            {/* Conditionally rendering the URL if both id and tokenid are not empty */}
                             {id && tokenid && (
-                                <div className='overflow-x-auto w-72 md:w-full shadow-2xl '>
-                                    <div className='text-blue-600   ' >
-                                      http://localhost:5000/user/{id}/{tokenid}
+                                <div className='overflow-x-auto w-72 md:w-full shadow-2xl'>
+                                    <div className='text-blue-600'>
+                                        http://localhost:5000/user/{id}/{tokenid}
                                     </div>
                                 </div>
                             )}

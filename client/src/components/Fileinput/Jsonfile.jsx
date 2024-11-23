@@ -10,6 +10,7 @@ function Jsonfile() {
 
   const navigate=useNavigate();
   const handleSubmit = (e) => {
+    const loaderToast = toast.loading('uploading feedback...');
     e.preventDefault();
 
     if (!file || !emailField || !feedbackName) {
@@ -54,6 +55,9 @@ function Jsonfile() {
         toast.error(ans.message);
        
        
+      }
+      finally{
+        toast.dismiss(loaderToast);
       }
     };
     

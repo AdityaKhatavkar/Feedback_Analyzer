@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Allfeedback from './Allfeedback';
 import toast from 'react-hot-toast';
 import axios from 'axios';
-import { set } from 'mongoose';
 
 function Dashboard() {
     const [badsummary, setBadsummary] = useState(null);
@@ -61,46 +60,45 @@ function Dashboard() {
         }
     };
 
-const handlesummarizefeedback= async () => {
+    const handlesummarizefeedback = async () => {
+        const loaderToast = toast.loading('Summarizing feedback...');
         try {
             const response = await axios.post('/user/summarizingfeedback', {}, {
                 withCredentials: true,
             });
             const content = response.data;
-            // console.log(content.data.good);
-            // console.log(content.data.bad);
             setGoodsummary(content.data.good);
             setBadsummary(content.data.bad);
             toast.success(content.message);
-            
         } catch (err) {
             if (err.response.status !== 401) {
                 const ans = err.response.data.message;
                 toast.error(ans);
+            }
+        } finally {
+            toast.dismiss(loaderToast);
         }
-    }
-}
+    };
 
-const analyziefeedback = async () => {
-    try {
-        const response = await axios.post('/user/analyzingfeedback', {}, {
-            withCredentials: true,
-        });
-        const content = response.data;
-        // console.log(content.data.negative);
-        // console.log(content.data.positive);
-        
-        
-        toast.success(content.message);
-        collectallfeedback();
-    }
-    catch (err) {
-        if (err.response.status !== 401) {
-            const ans = err.response.data.message;
-            toast.error(ans);
+    const analyziefeedback = async () => {
+        const loaderToast = toast.loading('Analyzing feedback...');
+        try {
+            const response = await axios.post('/user/analyzingfeedback', {}, {
+                withCredentials: true,
+            });
+            const content = response.data;
+            toast.success(content.message);
+            collectallfeedback();
+        } catch (err) {
+            if (err.response.status !== 401) {
+                const ans = err.response.data.message;
+                toast.error(ans);
+            }
+        } finally {
+            toast.dismiss(loaderToast);
         }
-    }
-}
+    };
+
     return (
         <div className='min-h-screen'>
             <div className='shadow-2xl pt-28 md:pt-40 w-full flex justify-center items-center p-4'>
@@ -182,3 +180,4 @@ const analyziefeedback = async () => {
 }
 
 export default Dashboard;
+    
