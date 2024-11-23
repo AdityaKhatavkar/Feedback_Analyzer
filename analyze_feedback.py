@@ -1,5 +1,6 @@
 import sys
 import json
+from classify import classify_text
 
 def analyze_feedback(feedbacks):
     
@@ -14,9 +15,9 @@ def analyze_feedback(feedbacks):
         feedback_text = feedback_entry.get('feedback', '')
 
         # Categorize based on feedback text
-        if "excellent" in feedback_text.lower() or "good" in feedback_text.lower():
+        if classify_text(feedback_text):
             categorized["positive"].append(feedback_entry)
-        elif "poor" in feedback_text.lower() or "bad" in feedback_text.lower():
+        else:
             categorized["negative"].append(feedback_entry)
 
     return categorized
