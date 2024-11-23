@@ -1,20 +1,16 @@
 import sys
 import json
+from ml.text_summarization.summarization import summarize_text
 
 def summarize_feedback(feedbacks):
     summary = {
         "sentence":'siddesh'
     }
+  
+    # Categorize feedback into good or bad summaries
+    to_summarize = " ".join(feedback.get('feedback', '') for feedback in feedbacks) 
+    summary['sentence'] = summarize_text(to_summarize)
 
-    for feedback_entry in feedbacks:
-        feedback_text = feedback_entry.get('feedback', '')
-         
-        # Categorize feedback into good or bad summaries
-        
-
-    # Trim any extra whitespace
- 
-    
     return summary
 
 if __name__ == "__main__":
