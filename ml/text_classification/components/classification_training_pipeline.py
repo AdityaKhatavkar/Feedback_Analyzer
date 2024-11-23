@@ -4,7 +4,7 @@ from classification_model import model_trainer
 
 # Dataset location
 #Dataset link kaggle : https://www.kaggle.com/datasets/niraliivaghani/flipkart-product-customer-reviews-dataset
-Dataset_file_path = 'ml//Datasets//Dataset-SA.csv'
+Dataset_file_path = 'ml\\Datasets\\Dataset-SA.xlsx'
 
 # Preprocess data
 X, y = data_preprocessing(Dataset_file_path)
