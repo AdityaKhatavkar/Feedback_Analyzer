@@ -1,5 +1,6 @@
 import pymongo
 import pickle
+import time
 import logging
 from ml.text_classification.components.data_transformation import text_preprocessing
 from ml.text_summarization.summarization import summarize_text
@@ -116,6 +117,7 @@ def listen_for_changes():
         for change in change_stream:
             # Whenever there is a change, run the analysis again
             logging.info(f"Change detected: {change}")
+            time.sleep(5)
             analyze_feedback()
             listen_for_changes()
     except Exception as e:
