@@ -12,7 +12,8 @@ const allfeedback=Asynchandler(async(req,res)=>{
     if(!feedback){
         throw new ApiError(400,"feedback not found")
     }
-    
+    // console.log("data : ")
+    // console.log(feedback)
     res.status(200).json(
         new ApiRespoance(200,feedback,"all feedback")
     )

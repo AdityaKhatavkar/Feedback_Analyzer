@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { userinfo,registerUser, verifyemailcode, loginUser, logoutUser } from "../controllers/user.controller.js";
 import authverfication from "../middlewares/auth.middlewares.js";
-import { feedbackcollection, feedbackformcreation, feedbackformdelete, formcollection,apigenerate,apifeedback,apidelete } from "../controllers/feedback.controller.js";
+import {summarizingfeedback,analyzingfeedback, feedbackcollection, feedbackformcreation, feedbackformdelete, formcollection,apigenerate,apifeedback,apidelete } from "../controllers/feedback.controller.js";
 import { allfeedback ,allsummary,addsummary} from "../controllers/data.controller.js";
 
 const router = Router();
@@ -35,4 +35,9 @@ router.route('/allfeedback').post(authverfication,allfeedback);
 router.route('/addsummary').post(authverfication,addsummary);
 
 router.route('/allsummary').post(authverfication,allsummary);
+
+
+router.route('/analyzingfeedback').post(authverfication,analyzingfeedback);
+
+router.route('/summarizingfeedback').post(authverfication,summarizingfeedback);
 export default router;

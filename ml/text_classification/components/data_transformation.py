@@ -8,6 +8,7 @@ from nltk.stem import WordNetLemmatizer
 from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import TfidfVectorizer
 import pickle
+from sklearn.preprocessing import LabelEncoder
 
 # Function for text preprocessing
 def text_preprocessing(text):
@@ -35,6 +36,8 @@ def data_preprocessing(file_path):
 
     X = pipeline.fit_transform(df['Review'])
     y = df['Sentiment']
+    
+   
 
     # Save the preprocessing pipeline
     os.makedirs('artifacts', exist_ok=True)

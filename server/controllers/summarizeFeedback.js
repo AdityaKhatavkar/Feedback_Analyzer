@@ -1,9 +1,9 @@
 import { spawn } from 'child_process';
 
-async function analyzeFeedback(feedbacks) {
+async function summarizeFeedback(feedbacks) {
     return new Promise((resolve, reject) => {
         // Spawn the Python process
-        const pythonProcess = spawn('python', ['analyze_feedback.py']);
+        const pythonProcess = spawn('python', ['summarize_feedback.py']);
 
         // Send the feedbacks data to Python
         pythonProcess.stdin.write(JSON.stringify(feedbacks));
@@ -12,11 +12,8 @@ async function analyzeFeedback(feedbacks) {
         let result = '';
         let error = '';
 
-        // console.log("Feedbacks sent to Python:", feedbacks);
-
         // Handle Python script output
-     
-   pythonProcess.stdout.on('data', (data) => {
+        pythonProcess.stdout.on('data', (data) => {
             result += data.toString();
         });
 
@@ -45,4 +42,4 @@ async function analyzeFeedback(feedbacks) {
     });
 }
 
-export default analyzeFeedback;
+export default summarizeFeedback;
